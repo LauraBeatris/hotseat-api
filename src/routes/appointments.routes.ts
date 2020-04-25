@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { parseISO, startOfHour } from 'date-fns';
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import CreateAppointmentService from '../services/CreateAppointmentService';
 
 const appointmentsRouter = Router();
 const appointmentsRepository = new AppointmentsRepository();
@@ -18,24 +19,23 @@ appointmentsRouter.post('/', (request, response) => {
       .status(400)
       .json({ error: 'Invalid data, some fields are missing!' });
 
-  const parsedDate = startOfHour(parseISO(date));
+  const parsedDate = parseISO(date);
 
-  const appointmentInTheSameDate = appointmentsRepository.findByDate(
-    parsedDate,
-  );
+  try {
+    const createAppointment = new CreateAppointmentService(
+      appointmentsRepository,
+    );
 
-  if (appointmentInTheSameDate)
-    return response
-      .status(400)
-      .json({ error: "There's already a appointment booked in that date" });
+    const appointment = createAppointment.execute({
+      provider,
+      date: parsedDate,
+      type,
+    });
 
-  const appointment = appointmentsRepository.create({
-    provider,
-    date: parsedDate,
-    type,
-  });
-
-  return response.json(appointment);
+    return response.json(appointment);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
 });
 
 export default appointmentsRouter;
