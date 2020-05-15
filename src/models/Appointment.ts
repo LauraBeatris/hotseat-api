@@ -1,21 +1,35 @@
-import { uuid } from 'uuidv4';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
+export type AppointmentType = 'Hair Care' | 'Hair Washing' | 'Classic Shaving';
+@Entity('appointments')
 class Appointment {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   provider: string;
 
+  @Column('timestamp with time zone')
   date: Date;
 
-  type: string;
+  @Column({
+    type: 'enum',
+    enum: ['Hair Care', 'Hair Washing', 'Classic Shaving'],
+    default: 'Hair Care',
+  })
+  type: AppointmentType;
 
-  constructor({ provider, date, type }: Omit<Appointment, 'id'>) {
-    this.id = uuid();
+  @CreateDateColumn()
+  created_at: Date;
 
-    this.provider = provider;
-    this.date = date;
-    this.type = type;
-  }
+  @UpdateDateColumn()
+  updated_at: Date;
 }
 
 export default Appointment;
