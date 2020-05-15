@@ -24,6 +24,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'error',
+    'class-methods-use-this': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
