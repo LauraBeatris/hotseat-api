@@ -1,9 +1,11 @@
 import express from 'express';
-import routes from './routes'
+import routes from './routes';
 
-const app = express()
+import './database';
 
-app.use(express.json())
-app.use(routes)
+const app = express();
 
-app.listen(8080, () => console.log("🚀 Server Launched"))
+app.use(express.json());
+app.use(routes);
+
+app.listen(8080, () => console.log('🚀 Server Launched'));
