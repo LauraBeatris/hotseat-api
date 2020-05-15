@@ -1,36 +1,38 @@
+import { getCustomRepository } from 'typeorm';
 import { startOfHour } from 'date-fns';
 
-import Appointment from '../models/Appointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import Appointment, { AppointmentType } from '../models/Appointment';
+import AppointmentRepository from '../repositories/AppointmentsRepository';
 
 interface Request {
   provider: string;
   date: Date;
-  type: string;
+  type: AppointmentType;
 }
 
 class CreateAppointmentService {
-  private appointmentsRepository: AppointmentsRepository;
+  public async execute({
+    provider,
+    date,
+    type,
+  }: Request): Promise<Appointment> {
+    const appointmentsRepository = getCustomRepository(AppointmentRepository);
 
-  constructor(appointmentsRepository: AppointmentsRepository) {
-    this.appointmentsRepository = appointmentsRepository;
-  }
-
-  public execute({ provider, date, type }: Request): Appointment {
     const appointmentDate = startOfHour(date);
-
-    const appointmentInTheSameDate = this.appointmentsRepository.findByDate(
+    const appointmentInTheSameDate = await appointmentsRepository.findByDate(
       appointmentDate,
     );
 
     if (appointmentInTheSameDate)
       throw Error("There's already a appointment booked in that date");
 
-    const appointment = this.appointmentsRepository.create({
+    const appointment = appointmentsRepository.create({
       provider,
       date: appointmentDate,
       type,
     });
+
+    await appointmentsRepository.save(appointment);
 
     return appointment;
   }
