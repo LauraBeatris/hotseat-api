@@ -4,24 +4,35 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
-export type AppointmentType = 'Hair Care' | 'Hair Washing' | 'Classic Shaving';
+import User from './User';
+
+export type AppointmentType = 'HAIR_CARE' | 'HAIR_WASHING' | 'CLASSIC_SHAVING';
 @Entity('appointments')
 class Appointment {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  provider: string;
+  @Column('uuid')
+  provider_id: string;
+
+  @ManyToOne(() => User, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'provider_id' })
+  provider: User;
 
   @Column('timestamp with time zone')
   date: Date;
 
   @Column({
     type: 'enum',
-    enum: ['Hair Care', 'Hair Washing', 'Classic Shaving'],
-    default: 'Hair Care',
+    enum: ['HAIR_CARE', 'HAIR_WASHING', 'CLASSIC_SHAVING'],
+    default: `'HAIR_CARE'`,
   })
   type: AppointmentType;
 
