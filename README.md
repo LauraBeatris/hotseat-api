@@ -6,6 +6,8 @@
 
 > Manage customers and services of your barber shop
 
+> [Click here to see the database model](https://dbdiagram.io/d/5ebff54e39d18f5553ff4c44) (Under construction) 
+
 # :closed_book: License
 
 Under development.
