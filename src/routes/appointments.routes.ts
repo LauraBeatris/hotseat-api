@@ -15,9 +15,9 @@ appointmentsRouter.get('/', async (_, response) => {
 });
 
 appointmentsRouter.post('/', async (request, response) => {
-  const { provider, date, type } = request.body;
+  const { provider_id, date, type } = request.body;
 
-  if (!provider || !date || !type)
+  if (!provider_id || !date || !type)
     return response
       .status(400)
       .json({ error: 'Invalid data, some fields are missing!' });
@@ -28,7 +28,7 @@ appointmentsRouter.post('/', async (request, response) => {
     const createAppointment = new CreateAppointmentService();
 
     const appointment = await createAppointment.execute({
-      provider,
+      provider_id,
       date: parsedDate,
       type,
     });
