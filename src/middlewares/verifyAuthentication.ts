@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
 import authConfig from '../config/auth';
+import AppError from '../errors/AppError';
 
 interface JWTPayload {
   sub: string;
@@ -16,7 +17,7 @@ const authMiddleware = (
     const { authorization } = request.headers;
 
     if (!authorization) {
-      throw Error('Authorization token not provided');
+      throw new AppError('Authorization token not provided', 403);
     }
 
     const [, token] = authorization?.split(' ');
@@ -28,8 +29,8 @@ const authMiddleware = (
     };
 
     return next();
-  } catch {
-    throw Error("You're not allowed to access this route");
+  } catch (error) {
+    throw new AppError(error.message);
   }
 };
 

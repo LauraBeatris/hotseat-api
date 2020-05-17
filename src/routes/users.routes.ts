@@ -27,29 +27,23 @@ routes.patch(
   verifyAuthentication,
   upload.single('avatar'),
   async (request, response) => {
-    try {
-      const { id: user_id } = request.user;
-      const avatarFileName = request.file?.filename;
+    const { id: user_id } = request.user;
+    const avatarFileName = request.file?.filename;
 
-      if (!avatarFileName) {
-        return response
-          .status(400)
-          .json({ error: 'Please, send a avatar file' });
-      }
-
-      const uploadAvatarService = new UploadAvatarService();
-
-      const userWithAvatar = await uploadAvatarService.execute({
-        user_id,
-        avatarFileName,
-      });
-
-      delete userWithAvatar.password;
-
-      return response.json(userWithAvatar);
-    } catch (error) {
-      return response.status(400).json({ error: error.message });
+    if (!avatarFileName) {
+      return response.status(400).json({ error: 'Please, send a avatar file' });
     }
+
+    const uploadAvatarService = new UploadAvatarService();
+
+    const userWithAvatar = await uploadAvatarService.execute({
+      user_id,
+      avatarFileName,
+    });
+
+    delete userWithAvatar.password;
+
+    return response.json(userWithAvatar);
   },
 );
 

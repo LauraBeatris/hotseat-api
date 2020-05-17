@@ -5,6 +5,8 @@ import Appointment, { AppointmentType } from '../models/Appointment';
 import AppointmentRepository from '../repositories/AppointmentsRepository';
 import User from '../models/User';
 
+import AppError from '../errors/AppError';
+
 interface Request {
   provider_id: string;
   date: Date;
@@ -25,14 +27,14 @@ class CreateAppointmentService {
     );
 
     if (appointmentInTheSameDate)
-      throw Error("There's already a appointment booked in that date");
+      throw new AppError("There's already a appointment booked in that date");
 
     const providerExists = await getRepository(User).findOne({
       id: provider_id,
     });
 
     if (!providerExists) {
-      throw Error("The provider doesn't exist");
+      throw new AppError("The provider doesn't exist", 404);
     }
 
     const appointment = appointmentsRepository.create({

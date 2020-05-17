@@ -4,6 +4,7 @@ import { parseISO } from 'date-fns';
 
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
+import AppError from '../errors/AppError';
 
 const appointmentsRouter = Router();
 
@@ -17,26 +18,21 @@ appointmentsRouter.get('/', async (_, response) => {
 appointmentsRouter.post('/', async (request, response) => {
   const { provider_id, date, type } = request.body;
 
-  if (!provider_id || !date || !type)
-    return response
-      .status(400)
-      .json({ error: 'Invalid data, some fields are missing!' });
+  if (!provider_id || !date || !type) {
+    throw new AppError('Invalid data, some fields are missing!');
+  }
 
   const parsedDate = parseISO(date);
 
-  try {
-    const createAppointment = new CreateAppointmentService();
+  const createAppointment = new CreateAppointmentService();
 
-    const appointment = await createAppointment.execute({
-      provider_id,
-      date: parsedDate,
-      type,
-    });
+  const appointment = await createAppointment.execute({
+    provider_id,
+    date: parsedDate,
+    type,
+  });
 
-    return response.json(appointment);
-  } catch (error) {
-    return response.status(400).json({ error: error.message });
-  }
+  return response.json(appointment);
 });
 
 export default appointmentsRouter;

@@ -4,6 +4,7 @@ import fs from 'fs';
 
 import User from '../models/User';
 import uploadConfig from '../config/upload';
+import AppError from '../errors/AppError';
 
 interface Request {
   user_id: string;
@@ -17,7 +18,7 @@ class UploadAvatarService {
     const userExists = await userRepository.findOne(user_id);
 
     if (!userExists) {
-      throw Error('User not found');
+      throw new AppError('User not found', 404);
     }
 
     if (userExists.avatar) {
