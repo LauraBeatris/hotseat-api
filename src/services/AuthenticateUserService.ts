@@ -23,14 +23,16 @@ class AuthenticateUserService {
       },
     });
 
+    const errorMessage = 'Incorrect email/password combination';
+
     if (!userExists) {
-      throw Error('User not found');
+      throw Error(errorMessage);
     }
 
     const passwordMatch = await compare(password, userExists.password);
 
     if (!passwordMatch) {
-      throw Error('Password mismatch');
+      throw Error(errorMessage);
     }
 
     const token = sign(
