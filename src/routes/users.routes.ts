@@ -1,6 +1,10 @@
 import { Router } from 'express';
 import CreateUserService from '../services/CreateUserService';
 
+import verifyAuthentication from '../middlewares/verifyAuthentication';
+import upload from '../middlewares/upload';
+import UploadAvatarService from '../services/UploadAvatarService';
+
 const routes = Router();
 
 routes.post('/', async (request, response) => {
@@ -17,5 +21,36 @@ routes.post('/', async (request, response) => {
     return response.status(400).json({ error: error.message });
   }
 });
+
+routes.patch(
+  '/avatar',
+  verifyAuthentication,
+  upload.single('avatar'),
+  async (request, response) => {
+    try {
+      const { id: user_id } = request.user;
+      const avatarFileName = request.file?.filename;
+
+      if (!avatarFileName) {
+        return response
+          .status(400)
+          .json({ error: 'Please, send a avatar file' });
+      }
+
+      const uploadAvatarService = new UploadAvatarService();
+
+      const userWithAvatar = await uploadAvatarService.execute({
+        user_id,
+        avatarFileName,
+      });
+
+      delete userWithAvatar.password;
+
+      return response.json(userWithAvatar);
+    } catch (error) {
+      return response.status(400).json({ error: error.message });
+    }
+  },
+);
 
 export default routes;
