@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import 'express-async-errors';
+import cors from 'cors';
 
 import routes from './routes';
 import errorHandler from './handlers/errors';
@@ -12,6 +12,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.directory));
 app.use(routes);
