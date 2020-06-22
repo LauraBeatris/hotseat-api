@@ -1,4 +1,6 @@
 import { Router } from 'express';
+
+import UsersRepository from '@domains/users/infra/database/repositories/UsersRepository';
 import AuthenticateUserService from '@domains/users/services/AuthenticateUserService';
 
 const routes = Router();
@@ -7,7 +9,10 @@ routes.post('/', async (request, response) => {
   const { email, password } = request.body;
 
   try {
-    const authenticateUserService = new AuthenticateUserService();
+    const usersRepository = new UsersRepository();
+    const authenticateUserService = new AuthenticateUserService(
+      usersRepository,
+    );
 
     const { user, token } = await authenticateUserService.execute({
       email,

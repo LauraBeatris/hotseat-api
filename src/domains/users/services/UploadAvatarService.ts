@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 
 import User from '@domains/users/infra/database/entities/User';
+import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 
@@ -12,10 +12,10 @@ interface IRequest {
 }
 
 class UploadAvatarService {
-  async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
-    const userRepository = getRepository(User);
+  constructor(private usersRepository: IUsersRepository) {}
 
-    const userExists = await userRepository.findOne(user_id);
+  async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
+    const userExists = await this.usersRepository.findById(user_id);
 
     if (!userExists) {
       throw new AppError('User not found', 404);
@@ -37,7 +37,7 @@ class UploadAvatarService {
 
     userExists.avatar = avatarFileName;
 
-    await userRepository.save(userExists);
+    await this.usersRepository.save(userExists);
 
     return userExists;
   }
