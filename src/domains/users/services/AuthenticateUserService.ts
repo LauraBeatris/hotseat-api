@@ -1,5 +1,6 @@
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
+import { injectable, inject } from 'tsyringe';
 
 import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
@@ -16,8 +17,12 @@ interface IAuthenticationResponse {
   user: User;
 }
 
+@injectable()
 class AuthenticateUserService {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
   async execute({
     email,

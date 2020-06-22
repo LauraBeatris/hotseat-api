@@ -4,6 +4,7 @@ import { parseISO } from 'date-fns';
 import AppointmentsRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
 import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
 import AppError from '@shared/errors/AppError';
+import container from '@shared/container';
 
 const appointmentsRouter = Router();
 
@@ -23,10 +24,7 @@ appointmentsRouter.post('/', async (request, response) => {
 
   const parsedDate = parseISO(date);
 
-  const appointmentsRepository = new AppointmentsRepository();
-  const createAppointment = new CreateAppointmentService(
-    appointmentsRepository,
-  );
+  const createAppointment = container.resolve(CreateAppointmentService);
 
   const appointment = await createAppointment.execute({
     provider_id,

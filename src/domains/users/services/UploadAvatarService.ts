@@ -1,3 +1,4 @@
+import { injectable, inject } from 'tsyringe';
 import path from 'path';
 import fs from 'fs';
 
@@ -11,8 +12,12 @@ interface IRequest {
   avatarFileName: string;
 }
 
+@injectable()
 class UploadAvatarService {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
   async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
     const userExists = await this.usersRepository.findById(user_id);
