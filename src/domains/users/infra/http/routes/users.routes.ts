@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import CreateUserService from '../services/CreateUserService';
+import CreateUserService from '@domains/users/services/CreateUserService';
 
-import verifyAuthentication from '../middlewares/verifyAuthentication';
-import upload from '../middlewares/upload';
-import UploadAvatarService from '../services/UploadAvatarService';
+import verifyAuthentication from '@shared/infra/http/middlewares/verifyAuthentication';
+import upload from '@shared/infra/http/middlewares/upload';
+import UploadAvatarService from '@domains/users/services/UploadAvatarService';
 
 const routes = Router();
 

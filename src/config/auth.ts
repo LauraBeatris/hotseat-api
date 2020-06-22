@@ -1,6 +1,8 @@
+import { JWT_EXPIRES_IN, DEFAULT_APP_SECRET } from '@constants/authentication';
+
 export default {
   jwt: {
-    expiresIn: '7d',
-    secret: process.env.APP_SECRET || 'secret',
+    expiresIn: JWT_EXPIRES_IN,
+    secret: process.env.APP_SECRET || DEFAULT_APP_SECRET,
   },
 };

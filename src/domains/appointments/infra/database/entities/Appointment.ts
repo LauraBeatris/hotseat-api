@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from './User';
+import User from '@domains/users/infra/database/entities/User';
 
 export type AppointmentType = 'HAIR_CARE' | 'HAIR_WASHING' | 'CLASSIC_SHAVING';
 @Entity('appointments')
