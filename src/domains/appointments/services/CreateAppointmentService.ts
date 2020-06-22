@@ -1,29 +1,29 @@
-import { getCustomRepository, getRepository } from 'typeorm';
+import { getRepository } from 'typeorm';
 import { startOfHour } from 'date-fns';
 
 import Appointment, {
   AppointmentType,
 } from '@domains/appointments/infra/database/entities/Appointment';
-import AppointmentRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
 import User from '@domains/users/infra/database/entities/User';
 import AppError from '@shared/errors/AppError';
+import IAppointmentsRepository from '@domains/appointments/interfaces/AppointmentsRepository';
 
-interface Request {
+interface IRequest {
   provider_id: string;
   date: Date;
   type: AppointmentType;
 }
 
 class CreateAppointmentService {
+  constructor(private appointmentsRepository: IAppointmentsRepository) {}
+
   public async execute({
     provider_id,
     date,
     type,
-  }: Request): Promise<Appointment> {
-    const appointmentsRepository = getCustomRepository(AppointmentRepository);
-
+  }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
-    const appointmentInTheSameDate = await appointmentsRepository.findByDate(
+    const appointmentInTheSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
 
@@ -38,13 +38,11 @@ class CreateAppointmentService {
       throw new AppError("The provider doesn't exist", 404);
     }
 
-    const appointment = appointmentsRepository.create({
+    const appointment = this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
       type,
     });
-
-    await appointmentsRepository.save(appointment);
 
     return appointment;
   }
