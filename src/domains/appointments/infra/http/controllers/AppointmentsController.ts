@@ -8,7 +8,10 @@ import AppError from '@shared/errors/AppError';
 import container from '@shared/container';
 
 export default class AppointmentsController {
-  async index(_, response: Response): Promise<Response<Appointment[]>> {
+  async index(
+    _: Request,
+    response: Response,
+  ): Promise<Response<Appointment[]>> {
     const appointmentsRepository = new AppointmentsRepository();
     const appointments = await appointmentsRepository.find();
 
