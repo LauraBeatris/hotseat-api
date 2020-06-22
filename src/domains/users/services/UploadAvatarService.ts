@@ -6,13 +6,13 @@ import User from '@domains/users/infra/database/entities/User';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFileName: string;
 }
 
 class UploadAvatarService {
-  async execute({ user_id, avatarFileName }: Request): Promise<User> {
+  async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
     const userRepository = getRepository(User);
 
     const userExists = await userRepository.findOne(user_id);

@@ -26,21 +26,28 @@ module.exports = {
     'prettier/prettier': 'error',
     'class-methods-use-this': 'off',
     '@typescript-eslint/camelcase': 'off',
-    '@typescript-eslint/no-unused-vars': ["error", {
-      "varsIgnorePattern": "^_",
-      "argsIgnorePattern": "^_"
+    '@typescript-eslint/no-unused-vars': ['error', {
+      'varsIgnorePattern': '^_',
+      'argsIgnorePattern': '^_'
     }],
     'import/extensions': [
       'error',
       'ignorePackages',
       {
-        ts: "never"
+        ts: 'never'
       }
-    ]
+    ],
+    '@typescript-eslint/interface-name-prefix': [
+      'error',
+      {
+        'prefixWithI': 'always'
+      }
+    ],
+    'no-useless-constructor': 'off'
   },
   settings: {
-    "import/resolver": {
-      "typescript": {}
+    'import/resolver': {
+      'typescript': {}
     }
   },
 };

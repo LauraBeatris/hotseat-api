@@ -4,14 +4,14 @@ import { hash } from 'bcryptjs';
 import User from '@domains/users/infra/database/entities/User';
 import AppError from '@shared/errors/AppError';
 
-interface Request {
+interface IRequest {
   name: string;
   email: string;
   password: string;
 }
 
 class CreateUserService {
-  public async execute({ name, email, password }: Request): Promise<User> {
+  public async execute({ name, email, password }: IRequest): Promise<User> {
     const usersRepository = getRepository(User);
 
     const findUserWithSameEmail = await usersRepository.findOne({

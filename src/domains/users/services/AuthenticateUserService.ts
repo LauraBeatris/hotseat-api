@@ -6,18 +6,21 @@ import User from '@domains/users/infra/database/entities/User';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface AuthenticationResponse {
+interface IAuthenticationResponse {
   token: string;
   user: User;
 }
 
 class AuthenticateUserService {
-  async execute({ email, password }: Request): Promise<AuthenticationResponse> {
+  async execute({
+    email,
+    password,
+  }: IRequest): Promise<IAuthenticationResponse> {
     const userExists = await getRepository(User).findOne({
       where: {
         email,
