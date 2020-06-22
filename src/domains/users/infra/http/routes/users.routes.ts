@@ -1,51 +1,21 @@
 import { Router } from 'express';
 
-import CreateUserService from '@domains/users/services/CreateUserService';
-import UploadAvatarService from '@domains/users/services/UploadAvatarService';
+import UsersController from '@domains/users/infra/http/controllers/UsersController';
+import UserAvatarController from '@domains/users/infra/http/controllers/UserAvatarController';
 import verifyAuthentication from '@shared/infra/http/middlewares/verifyAuthentication';
 import upload from '@shared/infra/http/middlewares/upload';
-import container from '@shared/container';
 
 const routes = Router();
+const usersController = new UsersController();
+const userAvatarController = new UserAvatarController();
 
-routes.post('/', async (request, response) => {
-  try {
-    const createUserService = container.resolve(CreateUserService);
-
-    const { name, email, password } = request.body;
-    const user = await createUserService.execute({ name, email, password });
-
-    delete user.password;
-
-    return response.json(user);
-  } catch (error) {
-    return response.status(400).json({ error: error.message });
-  }
-});
+routes.post('/', usersController.create);
 
 routes.patch(
   '/avatar',
   verifyAuthentication,
   upload.single('avatar'),
-  async (request, response) => {
-    const { id: user_id } = request.user;
-    const avatarFileName = request.file?.filename;
-
-    if (!avatarFileName) {
-      return response.status(400).json({ error: 'Please, send a avatar file' });
-    }
-
-    const uploadAvatarService = container.resolve(UploadAvatarService);
-
-    const userWithAvatar = await uploadAvatarService.execute({
-      user_id,
-      avatarFileName,
-    });
-
-    delete userWithAvatar.password;
-
-    return response.json(userWithAvatar);
-  },
+  userAvatarController.update,
 );
 
 export default routes;

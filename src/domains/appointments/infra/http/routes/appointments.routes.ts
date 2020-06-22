@@ -1,38 +1,12 @@
 import { Router } from 'express';
-import { parseISO } from 'date-fns';
 
-import AppointmentsRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
-import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
-import AppError from '@shared/errors/AppError';
-import container from '@shared/container';
+import AppointmentsController from '@domains/appointments/infra/http/controllers/AppointmentsController';
 
 const appointmentsRouter = Router();
+const appointmentsController = new AppointmentsController();
 
-appointmentsRouter.get('/', async (_, response) => {
-  const appointmentsRepository = new AppointmentsRepository();
-  const appointments = await appointmentsRepository.find();
+appointmentsRouter.get('/', appointmentsController.index);
 
-  return response.json(appointments);
-});
-
-appointmentsRouter.post('/', async (request, response) => {
-  const { provider_id, date, type } = request.body;
-
-  if (!provider_id || !date || !type) {
-    throw new AppError('Invalid data, some fields are missing!');
-  }
-
-  const parsedDate = parseISO(date);
-
-  const createAppointment = container.resolve(CreateAppointmentService);
-
-  const appointment = await createAppointment.execute({
-    provider_id,
-    date: parsedDate,
-    type,
-  });
-
-  return response.json(appointment);
-});
+appointmentsRouter.post('/', appointmentsController.create);
 
 export default appointmentsRouter;
