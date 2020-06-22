@@ -1,4 +1,7 @@
-import { JWT_EXPIRES_IN, DEFAULT_APP_SECRET } from '@constants/authentication';
+import {
+  JWT_EXPIRES_IN,
+  DEFAULT_APP_SECRET,
+} from '@shared/constants/authentication';
 
 export default {
   jwt: {
