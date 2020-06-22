@@ -17,7 +17,7 @@ const multerConfig = {
   }),
 
   fileFilter(
-    request: Request,
+    _: Request,
     file: Express.Multer.File,
     callback: FileFilterCallback,
   ): boolean {

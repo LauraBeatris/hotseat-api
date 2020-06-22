@@ -4,7 +4,7 @@ import { verify } from 'jsonwebtoken';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface JWTPayload {
+interface IJWTPayload {
   sub: string;
 }
 
@@ -22,7 +22,7 @@ const authMiddleware = (
 
     const [, token] = authorization?.split(' ');
 
-    const { sub } = verify(token, authConfig.jwt.secret) as JWTPayload;
+    const { sub } = verify(token, authConfig.jwt.secret) as IJWTPayload;
 
     request.user = {
       id: sub,
