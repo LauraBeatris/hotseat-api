@@ -28,6 +28,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
       date,
     });
 
+    this.appointments.push(appointment);
+
     return appointment;
   }
 }

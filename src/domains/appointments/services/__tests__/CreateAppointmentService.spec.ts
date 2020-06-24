@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import { uuid } from 'uuidv4';
-import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
+
 import AppointmentsRepository from '@domains/appointments/fakes/repositories/AppointmentRepository';
-import AppError from '@shared/errors/AppError';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
+import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
+import AppError from '@shared/errors/AppError';
 
 describe('Create Appointment', () => {
   it('should create an appointment', async () => {
