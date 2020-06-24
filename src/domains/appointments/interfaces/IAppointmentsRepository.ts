@@ -5,6 +5,4 @@ export default interface IAppointmentsRepository {
   findByDate(date: Date): Promise<Appointment | undefined>;
 
   create(appointmentData: ICreateAppointmentDTO): Promise<Appointment>;
-
-  find(): Promise<Appointment[]>;
 }

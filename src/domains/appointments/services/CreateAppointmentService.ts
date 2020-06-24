@@ -1,11 +1,9 @@
-import { getRepository } from 'typeorm';
 import { injectable, inject } from 'tsyringe';
 import { startOfHour } from 'date-fns';
 
 import Appointment, {
   AppointmentType,
 } from '@domains/appointments/infra/database/entities/Appointment';
-import User from '@domains/users/infra/database/entities/User';
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 
@@ -34,14 +32,6 @@ class CreateAppointmentService {
 
     if (appointmentInTheSameDate)
       throw new AppError("There's already a appointment booked in that date");
-
-    const providerExists = await getRepository(User).findOne({
-      id: provider_id,
-    });
-
-    if (!providerExists) {
-      throw new AppError("The provider doesn't exist", 404);
-    }
 
     const appointment = this.appointmentsRepository.create({
       provider_id,
