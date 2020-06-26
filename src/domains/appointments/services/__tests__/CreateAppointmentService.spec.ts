@@ -23,7 +23,7 @@ describe('Create Appointment', () => {
   });
 
   it('should not create two appointments with the same date', async () => {
-    const appointmentsRepository = new AppointmentsRepository();
+    const appointmentsRepository = new FakeAppointmentRepository();
     const createAppointment = new CreateAppointmentService(
       appointmentsRepository,
     );
