@@ -13,6 +13,8 @@ export default class UsersRepository implements IUsersRepository {
       ...userData,
     });
 
+    this.users.push(user);
+
     return user;
   }
 
@@ -29,6 +31,10 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   async save(user: User): Promise<User> {
+    const userIndex = this.users.findIndex(findUser => findUser.id === user.id);
+
+    this.users[userIndex] = user;
+
     return user;
   }
 }
