@@ -6,6 +6,8 @@ import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointme
 import UsersRepository from '@domains/users/infra/database/repositories/UsersRepository';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 
+import '@domains/users/providers';
+
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
