@@ -1,4 +1,4 @@
-import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepositories';
+import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
 import CreateUserService from '@domains/users/services/CreateUserService';
 import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/FakeBCryptHashProvider';
 import AppError from '@shared/errors/AppError';
