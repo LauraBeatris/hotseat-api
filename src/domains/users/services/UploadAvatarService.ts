@@ -1,15 +1,13 @@
 import { injectable, inject } from 'tsyringe';
-import path from 'path';
-import fs from 'fs';
 
 import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
-import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
+import IStorageProvider from '@shared/providers/StorageProvider/interfaces/IStorageProvider';
 
 interface IRequest {
   user_id: string;
-  avatarFileName: string;
+  avatarFilename: string;
 }
 
 @injectable()
@@ -17,30 +15,25 @@ class UploadAvatarService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('StorageProvider')
+    private storageProvider: IStorageProvider,
   ) {}
 
-  async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
+  async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
     const userExists = await this.usersRepository.findById(user_id);
 
     if (!userExists) {
       throw new AppError('User not found', 404);
     }
 
-    if (userExists.avatar) {
-      const userAvatarFilePath = path.join(
-        uploadConfig.directory,
-        userExists.avatar,
-      );
-
-      fs.promises
-        .stat(userAvatarFilePath)
-        .then(async () => {
-          await fs.promises.unlink(userAvatarFilePath);
-        })
-        .catch(() => console.error("Avatar file doesn't exists"));
+    const userAlreadyHasAvatar = !!userExists.avatar;
+    if (userAlreadyHasAvatar) {
+      this.storageProvider.deleteFile(userExists.avatar);
     }
 
-    userExists.avatar = avatarFileName;
+    this.storageProvider.saveFile(avatarFilename);
+
+    userExists.avatar = avatarFilename;
 
     await this.usersRepository.save(userExists);
 

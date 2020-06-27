@@ -6,9 +6,9 @@ import container from '@shared/container';
 export default class UserAvatarController {
   async update(request: Request, response: Response): Promise<Response> {
     const { id: user_id } = request.user;
-    const avatarFileName = request.file?.filename;
+    const avatarFilename = request.file?.filename;
 
-    if (!avatarFileName) {
+    if (!avatarFilename) {
       return response.status(400).json({ error: 'Please, send a avatar file' });
     }
 
@@ -16,7 +16,7 @@ export default class UserAvatarController {
 
     const userWithAvatar = await uploadAvatarService.execute({
       user_id,
-      avatarFileName,
+      avatarFilename,
     });
 
     delete userWithAvatar.password;
