@@ -4,4 +4,4 @@ import IHashProvider from './HashProvider/interfaces/IHashProvider';
 
 container.registerSingleton<IHashProvider>('HashProvider', BCryptHashProvider);
 
-export default IHashProvider;
+export default container;

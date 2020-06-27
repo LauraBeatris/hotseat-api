@@ -7,6 +7,7 @@ import UsersRepository from '@domains/users/infra/database/repositories/UsersRep
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 
 import '@domains/users/providers';
+import '../providers';
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',

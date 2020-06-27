@@ -3,11 +3,13 @@ import { diskStorage, FileFilterCallback } from 'multer';
 import path from 'path';
 import crypto from 'crypto';
 
-const multerConfig = {
-  directory: path.resolve(__dirname, '..', '..', 'tmp'),
+const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
+const multerConfig = {
+  tmpFolder,
+  uploadFolder: path.resolve(__dirname, '..', '..', 'tmp', 'uploads'),
   storage: diskStorage({
-    destination: path.resolve(__dirname, '..', '..', 'tmp'),
+    destination: tmpFolder,
     filename(request: Request, file: Express.Multer.File, callback) {
       const fileNamePrefix = crypto.randomBytes(11).toString('hex');
       const fileName = `${fileNamePrefix}-${file.originalname}`;
