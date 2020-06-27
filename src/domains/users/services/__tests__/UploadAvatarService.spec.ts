@@ -61,6 +61,8 @@ describe('Upload User Avatar', () => {
       password: 'meanless password',
     });
 
+    const deleteFile = jest.spyOn(storageProvider, 'deleteFile');
+
     await uploadAvatarService.execute({
       user_id: user.id,
       avatarFilename: oldFilename,
@@ -71,6 +73,7 @@ describe('Upload User Avatar', () => {
       avatarFilename: newFilename,
     });
 
+    expect(deleteFile).toHaveBeenCalledWith(oldFilename);
     expect(user.avatar).toBe(newFilename);
   });
 
