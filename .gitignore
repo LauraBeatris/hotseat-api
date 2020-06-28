@@ -105,3 +105,5 @@ dist
 
 tmp/*
 !tmp/.gitkeep
+
+REQUIREMENTS.md
