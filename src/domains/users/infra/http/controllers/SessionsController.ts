@@ -3,7 +3,7 @@ import AuthenticateUserService from '@domains/users/services/AuthenticateUserSer
 import container from '@shared/container';
 
 export default class SessionsController {
-  async post(request: Request, response: Response): Promise<Response> {
+  public async post(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
     const authenticateUserService = container.resolve(AuthenticateUserService);

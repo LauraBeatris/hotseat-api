@@ -8,7 +8,7 @@ import ICreateAppointmentDTO from '@domains/appointments/dtos/ICreateAppointment
 class AppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
 
-  async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(date: Date): Promise<Appointment | undefined> {
     const foundAppointment = this.appointments.find(appointment =>
       isEqual(appointment.date, date),
     );
@@ -16,7 +16,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return foundAppointment;
   }
 
-  async create({
+  public async create({
     provider_id,
     type,
     date,

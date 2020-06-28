@@ -22,6 +22,7 @@ class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
     @inject('HashProvider')
     private bcryptHashProvider: IHashProvider,
   ) {}

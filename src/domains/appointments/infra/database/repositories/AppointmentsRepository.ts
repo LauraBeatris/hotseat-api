@@ -11,7 +11,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
-  async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(date: Date): Promise<Appointment | undefined> {
     const findAppointment = await this.ormRepository.findOne({
       where: {
         date,
@@ -21,7 +21,9 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return findAppointment;
   }
 
-  async create(appointmentData: ICreateAppointmentDTO): Promise<Appointment> {
+  public async create(
+    appointmentData: ICreateAppointmentDTO,
+  ): Promise<Appointment> {
     const appointment = this.ormRepository.create(appointmentData);
 
     await this.ormRepository.save(appointment);
@@ -29,7 +31,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointment;
   }
 
-  async find(): Promise<Appointment[]> {
+  public async find(): Promise<Appointment[]> {
     const appointments = await this.ormRepository.find();
 
     return appointments;

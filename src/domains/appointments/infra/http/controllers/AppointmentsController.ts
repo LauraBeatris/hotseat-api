@@ -8,7 +8,7 @@ import AppError from '@shared/errors/AppError';
 import container from '@shared/container';
 
 export default class AppointmentsController {
-  async index(
+  public async index(
     _: Request,
     response: Response,
   ): Promise<Response<Appointment[]>> {
@@ -18,7 +18,7 @@ export default class AppointmentsController {
     return response.json(appointments);
   }
 
-  async create(
+  public async create(
     request: Request,
     response: Response,
   ): Promise<Response<Appointment>> {

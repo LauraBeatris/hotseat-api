@@ -5,7 +5,10 @@ import CreateUserService from '@domains/users/services/CreateUserService';
 import container from '@shared/container';
 
 export default class UsersController {
-  async create(request: Request, response: Response): Promise<Response<User>> {
+  public async create(
+    request: Request,
+    response: Response,
+  ): Promise<Response<User>> {
     const createUserService = container.resolve(CreateUserService);
 
     const { name, email, password } = request.body;
