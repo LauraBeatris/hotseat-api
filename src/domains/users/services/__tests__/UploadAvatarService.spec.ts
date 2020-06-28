@@ -1,9 +1,9 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
 import CreateUserService from '@domains/users/services/CreateUserService';
+import UploadAvatarService from '@domains/users/services/UploadAvatarService';
 import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/FakeBCryptHashProvider';
 import FakeDiskStorageProvider from '@shared/providers/StorageProvider/fakes/FakeDiskStorageProvider';
 import AppError from '@shared/errors/AppError';
-import UploadAvatarService from '../UploadAvatarService';
 
 describe('Upload User Avatar', () => {
   it('should upload user avatar', async () => {
