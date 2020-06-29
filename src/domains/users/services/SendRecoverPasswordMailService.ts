@@ -3,7 +3,7 @@ import IMailProvider from '@shared/providers/MailProvider/interfaces/IMailProvid
 import { APP_MAIL } from '@shared/constants/mail';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../interfaces/IUsersRepository';
-import IRecoverPasswordRequest from '../interfaces/IRecoverPasswordRequest';
+import IRecoverPasswordRequests from '../interfaces/IRecoverPasswordRequestsRepository';
 
 interface IRequest {
   email: string;
@@ -19,7 +19,7 @@ class SendRecoverPasswordMailService {
     private usersRepository: IUsersRepository,
 
     @inject('RecoverPasswordRequestMailRepository')
-    private recoverPasswordRequestRepository: IRecoverPasswordRequest,
+    private recoverPasswordRequestsRepository: IRecoverPasswordRequests,
   ) {}
 
   async execute({ email }: IRequest): Promise<void> {
@@ -31,7 +31,7 @@ class SendRecoverPasswordMailService {
       );
     }
 
-    await this.recoverPasswordRequestRepository.create(checkIfUserExists.id);
+    await this.recoverPasswordRequestsRepository.create(checkIfUserExists.id);
 
     await this.mailProvider.sendMail(
       APP_MAIL,

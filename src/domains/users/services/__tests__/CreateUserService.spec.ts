@@ -3,12 +3,18 @@ import CreateUserService from '@domains/users/services/CreateUserService';
 import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/FakeBCryptHashProvider';
 import AppError from '@shared/errors/AppError';
 
-describe('Create User', () => {
-  it('it should create an user', async () => {
-    const usersRepository = new FakeUsersRepository();
-    const hashProvider = new FakeBCryptHashProvider();
-    const createUser = new CreateUserService(usersRepository, hashProvider);
+let usersRepository: FakeUsersRepository;
+let hashProvider: FakeBCryptHashProvider;
+let createUser: CreateUserService;
 
+describe('Create User', () => {
+  beforeEach(() => {
+    usersRepository = new FakeUsersRepository();
+    hashProvider = new FakeBCryptHashProvider();
+    createUser = new CreateUserService(usersRepository, hashProvider);
+  });
+
+  it('it should create an user', async () => {
     const user = await createUser.execute({
       name: 'Jackie Chan',
       email: 'Jackie Chan',
@@ -19,10 +25,6 @@ describe('Create User', () => {
   });
 
   it('should create two users with the same email', async () => {
-    const usersRepository = new FakeUsersRepository();
-    const hashProvider = new FakeBCryptHashProvider();
-    const createUser = new CreateUserService(usersRepository, hashProvider);
-
     const email = 'jackiechan@test.com';
 
     await createUser.execute({

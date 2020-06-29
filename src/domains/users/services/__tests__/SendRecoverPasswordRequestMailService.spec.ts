@@ -1,29 +1,24 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
-import CreateUserService from '@domains/users/services/CreateUserService';
 import SendRecoverPasswordRequestMailService from '@domains/users/services/SendRecoverPasswordMailService';
 import FakeMailProvider from '@shared/providers/MailProvider/fakes/FakeMailProvider';
-import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/FakeBCryptHashProvider';
 import AppError from '@shared/errors/AppError';
-import FakeRecoverPasswordRequestRepository from '@domains/users/fakes/repositories/FakeRecoverPasswordRequestRepository';
+import FakeRecoverPasswordRequestsRepository from '@domains/users/fakes/repositories/FakeRecoverPasswordRequestsRepository';
 import { addHours } from 'date-fns';
 
-let hashProvider: FakeBCryptHashProvider;
 let mailProvider: FakeMailProvider;
 
 let usersRepository: FakeUsersRepository;
-let recoverPasswordRequestRepository: FakeRecoverPasswordRequestRepository;
+let recoverPasswordRequestRepository: FakeRecoverPasswordRequestsRepository;
 
-let createUserService: CreateUserService;
 let sendRecoverPasswordMailService: SendRecoverPasswordRequestMailService;
 
 describe('Recover Password Mail', () => {
   beforeEach(() => {
-    hashProvider = new FakeBCryptHashProvider();
     mailProvider = new FakeMailProvider();
-    recoverPasswordRequestRepository = new FakeRecoverPasswordRequestRepository();
 
+    recoverPasswordRequestRepository = new FakeRecoverPasswordRequestsRepository();
     usersRepository = new FakeUsersRepository();
-    createUserService = new CreateUserService(usersRepository, hashProvider);
+
     sendRecoverPasswordMailService = new SendRecoverPasswordRequestMailService(
       mailProvider,
       usersRepository,
@@ -38,7 +33,7 @@ describe('Recover Password Mail', () => {
       password: 'meanless password',
     };
 
-    const { email } = await createUserService.execute(userData);
+    const { email } = await usersRepository.create(userData);
 
     const sendMail = jest.spyOn(mailProvider, 'sendMail');
 
@@ -55,8 +50,8 @@ describe('Recover Password Mail', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should be able to generate a token based on the user id for the recover password request', async () => {
-    const { id, email } = await createUserService.execute({
+  it('should be able to create a token based on the user id for the recover password request', async () => {
+    const { id, email } = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
       password: 'meanless password',
@@ -69,8 +64,8 @@ describe('Recover Password Mail', () => {
     expect(createToken).toHaveBeenCalledWith(id);
   });
 
-  it('should be able to generate a expire date of two hours for the recover password request', async () => {
-    const { id } = await createUserService.execute({
+  it('should be able to create a expire date of two hours for the recover password request', async () => {
+    const { id } = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
       password: 'meanless password',

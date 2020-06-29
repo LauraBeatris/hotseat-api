@@ -12,7 +12,6 @@ class RecoverPasswordRequest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  // TODO -> Create relationship with the user entity
   @Column()
   user_id: string;
 

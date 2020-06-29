@@ -1,29 +1,30 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
-import CreateUserService from '@domains/users/services/CreateUserService';
 import UploadAvatarService from '@domains/users/services/UploadAvatarService';
-import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/FakeBCryptHashProvider';
 import FakeDiskStorageProvider from '@shared/providers/StorageProvider/fakes/FakeDiskStorageProvider';
 import AppError from '@shared/errors/AppError';
 
+let usersRepository: FakeUsersRepository;
+
+let storageProvider: FakeDiskStorageProvider;
+
+let uploadAvatarService: UploadAvatarService;
+
 describe('Upload User Avatar', () => {
-  it('should upload user avatar', async () => {
-    const usersRepository = new FakeUsersRepository();
+  beforeEach(() => {
+    usersRepository = new FakeUsersRepository();
 
-    const hashProvider = new FakeBCryptHashProvider();
-    const storageProvider = new FakeDiskStorageProvider();
+    storageProvider = new FakeDiskStorageProvider();
 
-    const createUserService = new CreateUserService(
-      usersRepository,
-      hashProvider,
-    );
-    const uploadAvatarService = new UploadAvatarService(
+    uploadAvatarService = new UploadAvatarService(
       usersRepository,
       storageProvider,
     );
+  });
 
+  it('should upload user avatar', async () => {
     const avatarFilename = 'jackie-chan-kicking.jpg';
 
-    const user = await createUserService.execute({
+    const user = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
       password: 'meanless password',
@@ -38,24 +39,10 @@ describe('Upload User Avatar', () => {
   });
 
   it('should delete old avatar when user uploads a new one', async () => {
-    const usersRepository = new FakeUsersRepository();
-
-    const hashProvider = new FakeBCryptHashProvider();
-    const storageProvider = new FakeDiskStorageProvider();
-
-    const createUserService = new CreateUserService(
-      usersRepository,
-      hashProvider,
-    );
-    const uploadAvatarService = new UploadAvatarService(
-      usersRepository,
-      storageProvider,
-    );
-
     const oldFilename = 'jackie-chan-kicking.jpg';
     const newFilename = 'jackie-chan-pushing.jpg';
 
-    const user = await createUserService.execute({
+    const user = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
       password: 'meanless password',
@@ -78,15 +65,6 @@ describe('Upload User Avatar', () => {
   });
 
   it('should not upload avatar for unexisting user', async () => {
-    const usersRepository = new FakeUsersRepository();
-
-    const storageProvider = new FakeDiskStorageProvider();
-
-    const uploadAvatarService = new UploadAvatarService(
-      usersRepository,
-      storageProvider,
-    );
-
     expect(
       uploadAvatarService.execute({
         user_id: 'unexisting user id',

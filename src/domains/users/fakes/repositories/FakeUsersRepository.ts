@@ -4,7 +4,7 @@ import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import ICreateUserDTO from '@domains/users/dtos/ICreateUserDTO';
 import User from '@domains/users/infra/database/entities/User';
 
-export default class UsersRepository implements IUsersRepository {
+export default class FakeUsersRepository implements IUsersRepository {
   private users: User[] = [];
 
   async create(userData: ICreateUserDTO): Promise<User> {
