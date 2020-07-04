@@ -27,7 +27,7 @@ describe('Upload User Avatar', () => {
     const user = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
-      password: 'meanless password',
+      password: 'meaningless password',
     });
 
     await uploadAvatarService.execute({
@@ -45,7 +45,7 @@ describe('Upload User Avatar', () => {
     const user = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
-      password: 'meanless password',
+      password: 'meaningless password',
     });
 
     const deleteFile = jest.spyOn(storageProvider, 'deleteFile');
@@ -68,7 +68,7 @@ describe('Upload User Avatar', () => {
     await expect(
       uploadAvatarService.execute({
         user_id: 'unexisting user id',
-        avatarFilename: 'meanless-filename.jpg',
+        avatarFilename: 'meaningless-filename.jpg',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

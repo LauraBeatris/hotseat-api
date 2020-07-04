@@ -21,7 +21,7 @@ describe('Authenticate User', () => {
     const userData = {
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
-      password: 'meanless password',
+      password: 'meaningless password',
     };
 
     const user = await usersReposistory.create(userData);
@@ -35,7 +35,7 @@ describe('Authenticate User', () => {
     const userData = {
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
-      password: 'meanless password',
+      password: 'meaningless password',
     };
 
     await expect(
@@ -44,15 +44,15 @@ describe('Authenticate User', () => {
   });
 
   it('should not authenticate autenticate user if password not matches', async () => {
-    const userData = {
+    const user = await usersReposistory.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
-      password: 'meanless password',
-    };
+      password: 'meaningless password',
+    });
 
     await expect(
       authenticateUserService.execute({
-        ...userData,
+        ...user,
         password: 'password that not matches',
       }),
     ).rejects.toBeInstanceOf(AppError);
