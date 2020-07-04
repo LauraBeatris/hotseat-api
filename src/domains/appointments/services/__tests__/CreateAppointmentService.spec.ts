@@ -6,13 +6,16 @@ import Appointment from '@domains/appointments/infra/database/entities/Appointme
 import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
 import AppError from '@shared/errors/AppError';
 
-describe('Create Appointment', () => {
-  it('should create an appointment', async () => {
-    const appointmentsRepository = new FakeAppointmentRepository();
-    const createAppointment = new CreateAppointmentService(
-      appointmentsRepository,
-    );
+let appointmentsRepository: FakeAppointmentRepository;
+let createAppointment: CreateAppointmentService;
 
+describe('Create Appointment', () => {
+  beforeEach(() => {
+    appointmentsRepository = new FakeAppointmentRepository();
+    createAppointment = new CreateAppointmentService(appointmentsRepository);
+  });
+
+  it('should create an appointment', async () => {
     const appointment = await createAppointment.execute({
       provider_id: uuid(),
       type: 'CLASSIC_SHAVING',
@@ -23,11 +26,6 @@ describe('Create Appointment', () => {
   });
 
   it('should not create two appointments with the same date', async () => {
-    const appointmentsRepository = new FakeAppointmentRepository();
-    const createAppointment = new CreateAppointmentService(
-      appointmentsRepository,
-    );
-
     const appointmentData = Object.assign(new Appointment(), {
       provider_id: uuid(),
       type: 'CLASSIC_SHAVING',
@@ -36,8 +34,8 @@ describe('Create Appointment', () => {
 
     await createAppointment.execute(appointmentData);
 
-    expect(createAppointment.execute(appointmentData)).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      createAppointment.execute(appointmentData),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

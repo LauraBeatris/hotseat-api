@@ -71,10 +71,11 @@ describe('Recover Password Mail', () => {
       password: 'meanless password',
     });
 
+    const now = new Date();
     const recoverPasswordRequest = await recoverPasswordRequestRepository.create(
       id,
     );
 
-    expect(recoverPasswordRequest.expires_at).toEqual(addHours(new Date(), 2));
+    expect(recoverPasswordRequest.expires_at).toEqual(addHours(now, 2));
   });
 });

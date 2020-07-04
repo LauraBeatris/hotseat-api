@@ -65,7 +65,7 @@ describe('Upload User Avatar', () => {
   });
 
   it('should not upload avatar for unexisting user', async () => {
-    expect(
+    await expect(
       uploadAvatarService.execute({
         user_id: 'unexisting user id',
         avatarFilename: 'meanless-filename.jpg',

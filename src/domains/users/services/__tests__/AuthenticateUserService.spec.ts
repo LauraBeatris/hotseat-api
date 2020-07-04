@@ -31,16 +31,16 @@ describe('Authenticate User', () => {
     expect(authPayload).toHaveProperty('user');
   });
 
-  it('should not authenticate an unexisting user', () => {
+  it('should not authenticate an unexisting user', async () => {
     const userData = {
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
       password: 'meanless password',
     };
 
-    expect(authenticateUserService.execute(userData)).rejects.toBeInstanceOf(
-      AppError,
-    );
+    await expect(
+      authenticateUserService.execute(userData),
+    ).rejects.toBeInstanceOf(AppError);
   });
 
   it('should not authenticate autenticate user if password not matches', async () => {
@@ -50,7 +50,7 @@ describe('Authenticate User', () => {
       password: 'meanless password',
     };
 
-    expect(
+    await expect(
       authenticateUserService.execute({
         ...userData,
         password: 'password that not matches',
