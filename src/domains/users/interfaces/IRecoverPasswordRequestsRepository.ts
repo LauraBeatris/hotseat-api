@@ -6,4 +6,5 @@ export default interface IRecoverPasswordRequestsRepository {
   findByToken(
     token: RecoverPasswordRequest['token'],
   ): Promise<RecoverPasswordRequest | undefined>;
+  delete(id: RecoverPasswordRequest['id']): Promise<void>;
 }

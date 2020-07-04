@@ -2,6 +2,7 @@ import { addHours } from 'date-fns';
 import { uuid } from 'uuidv4';
 import RecoverPasswordRequest from '@domains/users/infra/database/entities/RecoverPasswordRequest';
 import IRecoverPasswordRequestsRepository from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
+import { RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS } from '@domains/users/constants/resetPassword';
 
 class FakeRecoverPasswordRequestsRepository
   implements IRecoverPasswordRequestsRepository {
@@ -11,7 +12,7 @@ class FakeRecoverPasswordRequestsRepository
     const recoverPasswordRequest = Object.assign(new RecoverPasswordRequest(), {
       user_id,
       token: uuid(),
-      expires_at: addHours(new Date(), 2),
+      expires_at: addHours(Date.now(), RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS),
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -29,6 +30,14 @@ class FakeRecoverPasswordRequestsRepository
     );
 
     return recoverPasswordRequest;
+  }
+
+  public async delete(id: RecoverPasswordRequest['id']): Promise<void> {
+    const requestIndex = this.requests.findIndex(request => request.id === id);
+
+    if (requestIndex > -1) {
+      this.requests.splice(requestIndex, 1);
+    }
   }
 }
 

@@ -5,13 +5,19 @@ import {
   Generated,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
+import User from './User';
 
-@Entity('RecoverPasswordRequest')
+@Entity('recover_password_requests')
 class RecoverPasswordRequest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ManyToOne(() => User, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @Column()
   user_id: string;
 
