@@ -12,7 +12,7 @@ interface IRequest {
 @injectable()
 class SendRecoverPasswordMailService {
   constructor(
-    @inject('EtherealMailProvider')
+    @inject('MailProvider')
     private mailProvider: IMailProvider,
 
     @inject('UsersRepository')
