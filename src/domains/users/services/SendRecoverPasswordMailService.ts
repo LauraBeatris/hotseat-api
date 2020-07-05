@@ -1,4 +1,6 @@
 import { injectable, inject } from 'tsyringe';
+import fs from 'fs';
+import path from 'path';
 
 import IMailProvider from '@shared/container/providers/MailProvider/interfaces/IMailProvider';
 import AppError from '@shared/errors/AppError';
@@ -35,11 +37,29 @@ class SendRecoverPasswordMailService {
       checkIfUserExists.id,
     );
 
-    await this.mailProvider.sendMail(
-      email,
-      `You're receiving this email because you requested a new password. Verification Token: ${token}`,
-      'Hotseat - Reset Password Request',
+    const recoverPasswordRequestTemplateFilePath = path.resolve(
+      __dirname,
+      '..',
+      'infra',
+      'views',
+      'handlebars',
+      'resetPasswordRequest.hbs',
     );
+
+    await this.mailProvider.sendMail({
+      to: {
+        name: checkIfUserExists.name,
+        address: checkIfUserExists.email,
+      },
+      subject: 'Hotseat - Reset Password Request',
+      templateData: {
+        templateFilePath: recoverPasswordRequestTemplateFilePath,
+        variables: {
+          name: checkIfUserExists.name,
+          link: `${process.env.APP_CLIENT_URL}${process.env.APP_CLIENT_PASSWORD_RESET_ROUTE}?token=${token}`,
+        },
+      },
+    });
   }
 }
 

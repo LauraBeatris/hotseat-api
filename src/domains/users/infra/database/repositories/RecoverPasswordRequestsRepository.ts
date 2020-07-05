@@ -10,21 +10,14 @@ class RecoverPasswordRequestsRepository
   private ormRepository = getRepository(RecoverPasswordRequest);
 
   public async create(user_id: string): Promise<RecoverPasswordRequest> {
-    try {
-      const recoverPasswordRequest = await this.ormRepository.create({
-        user_id,
-        expires_at: addHours(
-          Date.now(),
-          RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS,
-        ),
-      });
+    const recoverPasswordRequest = await this.ormRepository.create({
+      user_id,
+      expires_at: addHours(Date.now(), RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS),
+    });
 
-      await this.ormRepository.save(recoverPasswordRequest);
+    await this.ormRepository.save(recoverPasswordRequest);
 
-      return recoverPasswordRequest;
-    } catch (err) {
-      console.log(err);
-    }
+    return recoverPasswordRequest;
   }
 
   public async findByToken(
