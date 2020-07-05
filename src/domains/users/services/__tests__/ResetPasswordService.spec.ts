@@ -1,19 +1,17 @@
 import FakeRecoverPasswordRequestsRepository from '@domains/users/fakes/repositories/FakeRecoverPasswordRequestsRepository';
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
-import ResetUserPasswordService from '@domains/users/services/ResetUserPasswordService';
+import ResetPasswordService from '@domains/users/services/ResetPasswordService';
 import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/FakeBCryptHashProvider';
 import AppError from '@shared/errors/AppError';
 import { addHours, getMilliseconds } from 'date-fns';
 import { RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS } from '@domains/users/constants/resetPassword';
-import UsersRepository from '@domains/users/infra/database/repositories/UsersRepository';
-import { check } from 'prettier';
 
 let usersRepository: FakeUsersRepository;
 let recoverPasswordRequestsRepository: FakeRecoverPasswordRequestsRepository;
 
 let hashProvider: FakeBCryptHashProvider;
 
-let resetPasswordService: ResetUserPasswordService;
+let resetPasswordService: ResetPasswordService;
 
 describe('Reset User Password', () => {
   beforeEach(() => {
@@ -22,7 +20,7 @@ describe('Reset User Password', () => {
 
     hashProvider = new FakeBCryptHashProvider();
 
-    resetPasswordService = new ResetUserPasswordService(
+    resetPasswordService = new ResetPasswordService(
       recoverPasswordRequestsRepository,
       usersRepository,
       hashProvider,
@@ -78,6 +76,12 @@ describe('Reset User Password', () => {
   });
 
   it('should not be able to reset the password if the request is expired', async () => {
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      return getMilliseconds(
+        addHours(Date.now(), RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS),
+      );
+    });
+
     const user = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
@@ -85,12 +89,6 @@ describe('Reset User Password', () => {
     });
 
     const { token } = await recoverPasswordRequestsRepository.create(user.id);
-
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
-      return getMilliseconds(
-        addHours(Date.now(), RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS),
-      );
-    });
 
     await expect(
       resetPasswordService.execute({
@@ -121,6 +119,3 @@ describe('Reset User Password', () => {
     expect(checkIfRequestExists).toBeFalsy();
   });
 });
-
-// Should delete request after successfully recoved password
-// verify if it's expired (2 hours later)

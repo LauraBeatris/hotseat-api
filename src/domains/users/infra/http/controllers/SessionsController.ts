@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import AuthenticateUserService from '@domains/users/services/AuthenticateUserService';
 import container from '@shared/container';
 

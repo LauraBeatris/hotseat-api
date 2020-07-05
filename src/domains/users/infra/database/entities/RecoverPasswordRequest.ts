@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import User from './User';
 
@@ -14,12 +15,15 @@ class RecoverPasswordRequest {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('uuid')
+  user_id: string;
+
   @ManyToOne(() => User, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @Column()
-  user_id: string;
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column()
   @Generated('uuid')

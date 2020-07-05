@@ -1,3 +1,4 @@
+import { APP_MAIL } from '@shared/constants/mail';
 import IMailProvider from '../interfaces/IMailProvider';
 
 interface IMail {
@@ -9,9 +10,9 @@ interface IMail {
 class FakeMailProvider implements IMailProvider {
   private mails: IMail[] = [];
 
-  public async sendMail(from: string, to: string, body: string): Promise<void> {
+  public async sendMail(to: string, body: string): Promise<void> {
     this.mails.push({
-      from,
+      from: APP_MAIL,
       to,
       body,
     });

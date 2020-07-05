@@ -1,9 +1,11 @@
 import AppError from '@shared/errors/AppError';
 import { injectable, inject } from 'tsyringe';
-import { differenceInHours } from 'date-fns';
+import { isAfter } from 'date-fns';
+
 import IRecoverPasswordRequestsRepository from '../interfaces/IRecoverPasswordRequestsRepository';
 import IUsersRepository from '../interfaces/IUsersRepository';
 import IHashProvider from '../providers/HashProvider/interfaces/IHashProvider';
+import User from '../infra/database/entities/User';
 
 interface IRequest {
   token: string;
@@ -13,8 +15,8 @@ interface IRequest {
 @injectable()
 class ResetUserPasswordService {
   constructor(
-    @inject('RecoverPasswordRequestsRepository')
-    private recoverPasswordRequestsRepository: IRecoverPasswordRequestsRepository,
+    @inject('RecoverPasswordRequestsMailRepository')
+    private recoverPasswordRequestsMailRepository: IRecoverPasswordRequestsRepository,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -23,8 +25,8 @@ class ResetUserPasswordService {
     private hashProvider: IHashProvider,
   ) {}
 
-  async execute({ token, password }: IRequest): Promise<void> {
-    const checkIfRequestExists = await this.recoverPasswordRequestsRepository.findByToken(
+  async execute({ token, password }: IRequest): Promise<User> {
+    const checkIfRequestExists = await this.recoverPasswordRequestsMailRepository.findByToken(
       token,
     );
 
@@ -32,8 +34,10 @@ class ResetUserPasswordService {
       throw new AppError("Token doesn't exists");
     }
 
-    const checkIfRequestIsExpired =
-      differenceInHours(checkIfRequestExists.expires_at, Date.now()) > 2;
+    const checkIfRequestIsExpired = isAfter(
+      Date.now(),
+      checkIfRequestExists.expires_at,
+    );
 
     if (checkIfRequestIsExpired) {
       throw new AppError('The recover password request is expired');
@@ -51,7 +55,9 @@ class ResetUserPasswordService {
 
     await this.usersRepository.save(checkIfUserExists);
 
-    this.recoverPasswordRequestsRepository.delete(checkIfRequestExists?.id);
+    this.recoverPasswordRequestsMailRepository.delete(checkIfRequestExists?.id);
+
+    return checkIfUserExists;
   }
 }
 

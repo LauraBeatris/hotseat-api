@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
-import IMailProvider from '@shared/providers/MailProvider/interfaces/IMailProvider';
-import { APP_MAIL } from '@shared/constants/mail';
+
+import IMailProvider from '@shared/container/providers/MailProvider/interfaces/IMailProvider';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../interfaces/IUsersRepository';
 import IRecoverPasswordRequests from '../interfaces/IRecoverPasswordRequestsRepository';
@@ -12,13 +12,13 @@ interface IRequest {
 @injectable()
 class SendRecoverPasswordMailService {
   constructor(
-    @inject('MailProvider')
+    @inject('EtherealMailProvider')
     private mailProvider: IMailProvider,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
-    @inject('RecoverPasswordRequestMailRepository')
+    @inject('RecoverPasswordRequestsMailRepository')
     private recoverPasswordRequestsRepository: IRecoverPasswordRequests,
   ) {}
 
@@ -31,12 +31,14 @@ class SendRecoverPasswordMailService {
       );
     }
 
-    await this.recoverPasswordRequestsRepository.create(checkIfUserExists.id);
+    const { token } = await this.recoverPasswordRequestsRepository.create(
+      checkIfUserExists.id,
+    );
 
     await this.mailProvider.sendMail(
-      APP_MAIL,
       email,
-      "You're receiving this email because you requested a new password",
+      `You're receiving this email because you requested a new password. Verification Token: ${token}`,
+      'Hotseat - Reset Password Request',
     );
   }
 }

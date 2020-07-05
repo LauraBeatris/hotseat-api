@@ -1,6 +1,6 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
 import SendRecoverPasswordRequestMailService from '@domains/users/services/SendRecoverPasswordMailService';
-import FakeMailProvider from '@shared/providers/MailProvider/fakes/FakeMailProvider';
+import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
 import AppError from '@shared/errors/AppError';
 import FakeRecoverPasswordRequestsRepository from '@domains/users/fakes/repositories/FakeRecoverPasswordRequestsRepository';
 import { addHours } from 'date-fns';
