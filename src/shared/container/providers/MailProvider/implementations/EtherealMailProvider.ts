@@ -38,7 +38,7 @@ class EtherealMailProvider implements IMailProvider {
       variables: templateData.variables,
     });
 
-    const message = await this.client.sendMail({
+    await this.client.sendMail({
       from: {
         name: process.env.APP_MAIL_NAME || 'Hotseat Team',
         address: process.env.APP_MAIL_ADDRESS || 'team@hotseat.com',
@@ -47,9 +47,6 @@ class EtherealMailProvider implements IMailProvider {
       subject,
       html: template,
     });
-
-    console.log('Message sent: %s', message.messageId);
-    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
   }
 }
 

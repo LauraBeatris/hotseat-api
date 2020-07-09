@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { uuid } from 'uuidv4';
 
 import FakeAppointmentRepository from '@domains/appointments/fakes/repositories/FakeAppointmentRepository';

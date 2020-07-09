@@ -36,9 +36,7 @@ class UploadAvatarService {
 
     userExists.avatar = avatarFilename;
 
-    await this.usersRepository.save(userExists);
-
-    return userExists;
+    return this.usersRepository.save(userExists);
   }
 }
 

@@ -1,5 +1,4 @@
 import { injectable, inject } from 'tsyringe';
-import fs from 'fs';
 import path from 'path';
 
 import IMailProvider from '@shared/container/providers/MailProvider/interfaces/IMailProvider';
