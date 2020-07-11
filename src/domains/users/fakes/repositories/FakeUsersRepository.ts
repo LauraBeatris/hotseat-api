@@ -8,7 +8,7 @@ import IFindProvidersDTO from '@domains/users/dtos/IFindProvidersDTO';
 export default class FakeUsersRepository implements IUsersRepository {
   private users: User[] = [];
 
-  async create(userData: ICreateUserDTO): Promise<User> {
+  public async create(userData: ICreateUserDTO): Promise<User> {
     const user = Object.assign(new User(), {
       id: uuid(),
       ...userData,
@@ -19,21 +19,23 @@ export default class FakeUsersRepository implements IUsersRepository {
     return user;
   }
 
-  async findByEmail(email: User['email']): Promise<User | undefined> {
+  public async findByEmail(email: User['email']): Promise<User | undefined> {
     const userFound = this.users.find(user => user.email === email);
 
     return userFound;
   }
 
-  async findById(id: User['id']): Promise<User | undefined> {
+  public async findById(id: User['id']): Promise<User | undefined> {
     const userFound = this.users.find(user => user.id === id);
 
     return userFound;
   }
 
-  async findProviders({ expectUserId }: IFindProvidersDTO): Promise<User[]> {
+  public async findProviders({
+    exceptUserId,
+  }: IFindProvidersDTO): Promise<User[]> {
     const providers = this.users.filter(
-      user => user.id !== expectUserId && user.is_provider,
+      user => user.id !== exceptUserId && user.is_provider,
     );
 
     return providers;

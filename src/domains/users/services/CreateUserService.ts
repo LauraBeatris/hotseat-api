@@ -9,6 +9,7 @@ interface IRequest {
   name: string;
   email: string;
   password: string;
+  is_provider?: boolean;
 }
 
 @injectable()
@@ -21,7 +22,12 @@ class CreateUserService {
     private bcryptHashProvider: IHashProvider,
   ) {}
 
-  public async execute({ name, email, password }: IRequest): Promise<User> {
+  public async execute({
+    name,
+    email,
+    password,
+    is_provider,
+  }: IRequest): Promise<User> {
     const findUserWithSameEmail = await this.usersRepository.findByEmail(email);
 
     if (findUserWithSameEmail) {
@@ -37,6 +43,7 @@ class CreateUserService {
       name,
       email,
       password: passwordHash,
+      is_provider,
     });
 
     return user;

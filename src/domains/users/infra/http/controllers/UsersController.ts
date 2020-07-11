@@ -11,8 +11,14 @@ export default class UsersController {
   ): Promise<Response<User>> {
     const createUserService = container.resolve(CreateUserService);
 
-    const { name, email, password } = request.body;
-    const user = await createUserService.execute({ name, email, password });
+    const { name, email, password, is_provider } = request.body;
+
+    const user = await createUserService.execute({
+      name,
+      email,
+      password,
+      is_provider,
+    });
 
     delete user.password;
 
