@@ -52,16 +52,12 @@ class UpdateUserService {
         );
       }
 
-      const hashedOldPassword = await this.hashProvider.generateHash(
+      const passwordMath = await this.hashProvider.compareHash(
         old_password,
-      );
-
-      const passwordsMatch = await this.hashProvider.compareHash(
         user.password,
-        hashedOldPassword,
       );
 
-      if (passwordsMatch) {
+      if (!passwordMath) {
         throw new AppError('The old password provided is invalid');
       }
 

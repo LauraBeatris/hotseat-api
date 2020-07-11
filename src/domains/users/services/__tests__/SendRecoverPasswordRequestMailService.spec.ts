@@ -13,7 +13,7 @@ let recoverPasswordRequestRepository: FakeRecoverPasswordRequestsRepository;
 
 let sendRecoverPasswordMailService: SendRecoverPasswordRequestMailService;
 
-describe('Recover Password Mail', () => {
+describe('Send Recover Password Mail', () => {
   beforeEach(() => {
     mailProvider = new FakeMailProvider();
 

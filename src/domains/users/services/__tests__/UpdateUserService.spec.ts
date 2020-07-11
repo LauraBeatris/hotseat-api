@@ -10,7 +10,7 @@ let hashProvider: FakeBCryptHashProvider;
 
 let updateUserService: UpdateUserService;
 
-describe('Upload User Avatar', () => {
+describe('Update User', () => {
   beforeEach(() => {
     usersRepository = new FakeUsersRepository();
 
