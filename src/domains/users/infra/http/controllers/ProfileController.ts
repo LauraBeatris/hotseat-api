@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 
-import User from '@domains/users/infra/database/entities/User';
 import UpdateUserService from '@domains/users/services/UpdateUserService';
+import ShowProfileService from '@domains/users/services/ShowProfileService';
+import User from '@domains/users/infra/database/entities/User';
 import container from '@shared/container';
 
 export default class ProfileController {
@@ -16,6 +17,18 @@ export default class ProfileController {
       email,
       password,
       old_password,
+      user_id,
+    });
+
+    return response.json(user);
+  }
+
+  async show(request: Request, response: Response): Promise<Response<User>> {
+    const { id: user_id } = request.user;
+
+    const showProfileService = container.resolve(ShowProfileService);
+
+    const user = await showProfileService.execute({
       user_id,
     });
 

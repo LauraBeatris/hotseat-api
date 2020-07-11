@@ -5,6 +5,7 @@ import ProfileController from '@domains/users/infra/http/controllers/ProfileCont
 const routes = Router();
 const profileController = new ProfileController();
 
+routes.get('/', profileController.show);
 routes.put('/', profileController.update);
 
 export default routes;
