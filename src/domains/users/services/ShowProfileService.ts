@@ -1,0 +1,25 @@
+import { injectable, inject } from 'tsyringe';
+import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
+import AppError from '@shared/errors/AppError';
+import User from '../infra/database/entities/User';
+
+interface IRequest {
+  user_id: string;
+}
+
+@injectable()
+class ShowProfileService {
+  constructor(private usersRepository: IUsersRepository) {}
+
+  async execute({ user_id }: IRequest): Promise<User | undefined> {
+    const user = await this.usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError('User not found', 404);
+    }
+
+    return user;
+  }
+}
+
+export default ShowProfileService;
