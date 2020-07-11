@@ -9,7 +9,10 @@ interface IRequest {
 
 @injectable()
 class ShowProfileService {
-  constructor(private usersRepository: IUsersRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
   async execute({ user_id }: IRequest): Promise<User | undefined> {
     const user = await this.usersRepository.findById(user_id);
@@ -17,6 +20,8 @@ class ShowProfileService {
     if (!user) {
       throw new AppError('User not found', 404);
     }
+
+    delete user.password;
 
     return user;
   }
