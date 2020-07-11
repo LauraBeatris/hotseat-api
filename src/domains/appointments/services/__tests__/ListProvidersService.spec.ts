@@ -25,7 +25,7 @@ describe('List Providers', () => {
     });
 
     const providers = await listProvidersService.execute({
-      expectUserId: customer.id,
+      exceptUserId: customer.id,
     });
 
     expect(providers).toContainEqual(provider);
@@ -39,7 +39,7 @@ describe('List Providers', () => {
     });
 
     const providers = await listProvidersService.execute({
-      expectUserId: user.id,
+      exceptUserId: user.id,
     });
 
     expect(providers).not.toContain(user);
