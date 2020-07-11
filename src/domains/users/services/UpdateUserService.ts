@@ -52,12 +52,23 @@ class UpdateUserService {
         );
       }
 
-      if (user.password !== old_password) {
+      const hashedOldPassword = await this.hashProvider.generateHash(
+        old_password,
+      );
+
+      const passwordsMatch = await this.hashProvider.compareHash(
+        user.password,
+        hashedOldPassword,
+      );
+
+      if (passwordsMatch) {
         throw new AppError('The old password provided is invalid');
       }
 
       user.password = await this.hashProvider.generateHash(password);
     }
+
+    await this.usersRepository.save(user);
 
     return user;
   }
