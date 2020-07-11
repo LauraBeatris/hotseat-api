@@ -23,6 +23,9 @@ class User {
   @Column()
   password: string;
 
+  @Column('boolean')
+  is_provider: boolean;
+
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
