@@ -3,8 +3,10 @@ import RecoverPasswordRequest from '../infra/database/entities/RecoverPasswordRe
 
 export default interface IRecoverPasswordRequestsRepository {
   create(user_id: User['id']): Promise<RecoverPasswordRequest>;
+
   findByToken(
     token: RecoverPasswordRequest['token'],
   ): Promise<RecoverPasswordRequest | undefined>;
+
   delete(id: RecoverPasswordRequest['id']): Promise<void>;
 }

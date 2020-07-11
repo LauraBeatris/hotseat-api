@@ -3,6 +3,7 @@ import { uuid } from 'uuidv4';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import ICreateUserDTO from '@domains/users/dtos/ICreateUserDTO';
 import User from '@domains/users/infra/database/entities/User';
+import IFindProvidersDTO from '@domains/users/dtos/IFindProvidersDTO';
 
 export default class FakeUsersRepository implements IUsersRepository {
   private users: User[] = [];
@@ -28,6 +29,14 @@ export default class FakeUsersRepository implements IUsersRepository {
     const userFound = this.users.find(user => user.id === id);
 
     return userFound;
+  }
+
+  async findProviders({ expectUserId }: IFindProvidersDTO): Promise<User[]> {
+    const providers = this.users.filter(
+      user => user.id !== expectUserId && user.is_provider,
+    );
+
+    return providers;
   }
 
   async save(user: User): Promise<User> {
