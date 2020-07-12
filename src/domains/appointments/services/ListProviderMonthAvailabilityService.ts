@@ -1,9 +1,10 @@
 import { inject, injectable } from 'tsyringe';
+import { getDate, getDaysInMonth } from 'date-fns';
 
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 import AppError from '@shared/errors/AppError';
-import { getDate, getDaysInMonth } from 'date-fns';
+import { MAX_APPOINTMENTS_PER_DAY } from '@domains/users/constants/appointments';
 
 interface IRequest {
   provider_id: string;
@@ -54,7 +55,7 @@ class ListProviderMonthAvailabilityService {
 
       return {
         day,
-        available: numberOfAppointmentsInDay < 10,
+        available: numberOfAppointmentsInDay < MAX_APPOINTMENTS_PER_DAY,
       };
     });
 
