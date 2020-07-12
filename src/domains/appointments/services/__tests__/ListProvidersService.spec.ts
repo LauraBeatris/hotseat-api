@@ -1,4 +1,5 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
+import AppError from '@shared/errors/AppError';
 import ListProvidersService from '../ListProvidersService';
 
 let usersRepository: FakeUsersRepository;
@@ -44,5 +45,13 @@ describe('List Providers', () => {
 
     expect(providers).not.toContain(user);
     expect(providers).toHaveLength(0);
+  });
+
+  it('should not be able to list the providers for an unexisting user', async () => {
+    await expect(
+      listProvidersService.execute({
+        exceptUserId: 'unexisting user id',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });

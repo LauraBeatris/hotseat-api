@@ -7,7 +7,6 @@ import AppError from '@shared/errors/AppError';
 interface IRequest {
   exceptUserId: string;
 }
-
 @injectable()
 class ListProvidersService {
   constructor(

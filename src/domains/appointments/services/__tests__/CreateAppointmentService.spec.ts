@@ -1,16 +1,16 @@
 import { uuid } from 'uuidv4';
 
-import FakeAppointmentRepository from '@domains/appointments/fakes/repositories/FakeAppointmentRepository';
+import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories/FakeAppointmentsRepository';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
 import AppError from '@shared/errors/AppError';
 
-let appointmentsRepository: FakeAppointmentRepository;
+let appointmentsRepository: FakeAppointmentsRepository;
 let createAppointment: CreateAppointmentService;
 
 describe('Create Appointment', () => {
   beforeEach(() => {
-    appointmentsRepository = new FakeAppointmentRepository();
+    appointmentsRepository = new FakeAppointmentsRepository();
     createAppointment = new CreateAppointmentService(appointmentsRepository);
   });
 
