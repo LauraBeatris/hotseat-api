@@ -4,7 +4,10 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+
+import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 
 @Entity('users')
 class User {
@@ -25,6 +28,9 @@ class User {
 
   @Column('boolean')
   is_provider: boolean;
+
+  @OneToMany(() => Appointment, appointment => appointment.customer)
+  appointments: Appointment[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

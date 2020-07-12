@@ -19,20 +19,14 @@ class Appointment {
   @Column('uuid')
   provider_id: string;
 
-  @ManyToOne(() => User, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(() => User, user => user.appointments, { eager: true })
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
   @Column('uuid')
   customer_id: string;
 
-  @ManyToOne(() => User, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @ManyToOne(() => User, user => user.appointments, { eager: true })
   @JoinColumn({ name: 'customer_id' })
   customer: User;
 
