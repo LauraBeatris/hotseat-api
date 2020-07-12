@@ -1,6 +1,6 @@
 import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories/FakeAppointmentsRepository';
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
-import ListProviderDayAvailabilityService from '@domains/appointments/services/ListProviderDayAvailability';
+import ListProviderDayAvailabilityService from '@domains/appointments/services/ListProviderDayAvailabilityService';
 
 let appointmentsRepository: FakeAppointmentsRepository;
 let usersRepository: FakeUsersRepository;

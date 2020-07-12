@@ -1,4 +1,4 @@
-import { getDate, getMonth, getYear, isEqual } from 'date-fns';
+import { getDate, getYear, isEqual } from 'date-fns';
 import { uuid } from 'uuidv4';
 
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
@@ -6,6 +6,7 @@ import Appointment from '@domains/appointments/infra/database/entities/Appointme
 import ICreateAppointmentDTO from '@domains/appointments/dtos/ICreateAppointmentDTO';
 import IFindByMonthFromProviderDTO from '@domains/appointments/dtos/IFindByMonthFromProviderDTO';
 import IFindByDayFromProviderDTO from '@domains/appointments/dtos/IFindByDayFromProviderDTO';
+import getMonth from '@shared/utils/getMonth';
 
 class AppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
@@ -43,7 +44,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     const appointments = this.appointments.filter(
       appointment =>
         appointment.provider_id === provider_id &&
-        getMonth(appointment.date) + 1 === month &&
+        getMonth(appointment.date) === month &&
         getYear(appointment.date) === year,
     );
 
@@ -60,7 +61,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
       appointment =>
         appointment.provider_id === provider_id &&
         getDate(appointment.date) === day &&
-        getMonth(appointment.date) + 1 === month &&
+        getMonth(appointment.date) === month &&
         getYear(appointment.date) === year,
     );
 
