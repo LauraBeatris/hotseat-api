@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { getHours } from 'date-fns';
+import { getHours, isAfter } from 'date-fns';
 
 import {
   MAX_APPOINTMENTS_PER_DAY,
@@ -62,9 +62,13 @@ class ListProviderDayAvailabilityService {
         appointment => getHours(appointment.date) === hour,
       );
 
+      const choosedDate = new Date(year, month - 1, day, hour);
+      const currentDate = new Date(Date.now());
+
       return {
         hour,
-        available: !hasAppointmentInThisHour,
+        available:
+          !hasAppointmentInThisHour && isAfter(choosedDate, currentDate),
       };
     });
 
