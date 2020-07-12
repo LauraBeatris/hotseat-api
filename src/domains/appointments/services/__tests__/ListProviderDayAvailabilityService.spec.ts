@@ -45,7 +45,7 @@ describe('List Provider Day Availability', () => {
 
     jest
       .spyOn(Date, 'now')
-      .mockImplementation(() => new Date(2020, 1, 1, 13, 0, 0).getTime());
+      .mockImplementationOnce(() => new Date(2020, 1, 1, 13, 0, 0).getTime());
 
     const availability = await listProviderDayAvailabilityService.execute({
       provider_id: provider.id,

@@ -57,13 +57,14 @@ class ListProviderDayAvailabilityService {
       (_, index) => index + BUSINESS_START_HOUR,
     );
 
+    const currentDate = new Date(Date.now());
+
     const availability = businessHoursArray.map(hour => {
       const hasAppointmentInThisHour = appointments.find(
         appointment => getHours(appointment.date) === hour,
       );
 
       const choosedDate = new Date(year, month - 1, day, hour);
-      const currentDate = new Date(Date.now());
 
       return {
         hour,
