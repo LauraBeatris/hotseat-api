@@ -26,6 +26,16 @@ class Appointment {
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
+  @Column('uuid')
+  customer_id: string;
+
+  @ManyToOne(() => User, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'customer_id' })
+  customer: User;
+
   @Column('timestamp with time zone')
   date: Date;
 

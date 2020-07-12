@@ -25,9 +25,16 @@ describe('List Provider Month Availability', () => {
       password: 'meaningless password',
     });
 
+    const { id: customer_id } = await usersRepository.create({
+      name: 'Jackie Chan Customer',
+      email: 'jackiechancustomer@test.com',
+      password: 'meaningless password',
+    });
+
     await appointmentsRepository.create({
       date: new Date(2020, 1, 1, 20, 0, 0),
       provider_id,
+      customer_id,
       type: 'CLASSIC_SHAVING',
     });
 
@@ -40,6 +47,7 @@ describe('List Provider Month Availability', () => {
       appointmentsRepository.create({
         date: new Date(2020, 1, 2, 20, 0, 0),
         provider_id,
+        customer_id,
         type: 'CLASSIC_SHAVING',
       }),
     );

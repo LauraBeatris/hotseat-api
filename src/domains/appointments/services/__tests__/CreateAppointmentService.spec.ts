@@ -17,6 +17,7 @@ describe('Create Appointment', () => {
   it('should create an appointment', async () => {
     const appointment = await createAppointment.execute({
       provider_id: uuid(),
+      customer_id: uuid(),
       type: 'CLASSIC_SHAVING',
       date: new Date(),
     });
@@ -27,6 +28,7 @@ describe('Create Appointment', () => {
   it('should not create two appointments with the same date', async () => {
     const appointmentData = Object.assign(new Appointment(), {
       provider_id: uuid(),
+      customer_id: uuid(),
       type: 'CLASSIC_SHAVING',
       date: new Date(),
     });

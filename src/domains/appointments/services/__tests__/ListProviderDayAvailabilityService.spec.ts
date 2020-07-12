@@ -23,15 +23,23 @@ describe('List Provider Day Availability', () => {
       password: 'meaningless password',
     });
 
+    const customer = await usersRepository.create({
+      name: 'Jackie Chan Customer',
+      email: 'jackiechancustomer@test.com',
+      password: 'meaningless password',
+    });
+
     await appointmentsRepository.create({
       date: new Date(2020, 1, 1, 15, 0, 0),
       provider_id: provider.id,
+      customer_id: customer.id,
       type: 'HAIR_CARE',
     });
 
     await appointmentsRepository.create({
       date: new Date(2020, 1, 1, 16, 0, 0),
       provider_id: provider.id,
+      customer_id: customer.id,
       type: 'HAIR_WASHING',
     });
 

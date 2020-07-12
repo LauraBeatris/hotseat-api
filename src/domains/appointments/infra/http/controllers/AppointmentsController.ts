@@ -23,6 +23,7 @@ export default class AppointmentsController {
     response: Response,
   ): Promise<Response<Appointment>> {
     const { provider_id, date, type } = request.body;
+    const customer_id = request.user.id;
 
     if (!provider_id || !date || !type) {
       throw new AppError('Invalid data, some fields are missing!');
@@ -34,6 +35,7 @@ export default class AppointmentsController {
 
     const appointment = await createAppointment.execute({
       provider_id,
+      customer_id,
       date: parsedDate,
       type,
     });
