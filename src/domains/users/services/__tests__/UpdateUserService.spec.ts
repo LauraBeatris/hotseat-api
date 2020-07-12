@@ -44,6 +44,16 @@ describe('Update User', () => {
     expect(updatedUser.password).toBe(updatedUserData.password);
   });
 
+  it('should not be able to update an unexisting user', async () => {
+    await expect(
+      updateUserService.execute({
+        user_id: 'unexisting user id',
+        email: 'unexistingemail@text.com',
+        name: 'unexisting name',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
   it("should not update email if it's already being used", async () => {
     const { id: user_id, name } = await usersRepository.create({
       name: 'Jackie Chan',
