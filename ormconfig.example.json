@@ -1,0 +1,31 @@
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "example",
+    "password": "example",
+    "database": "example",
+    "entities": [
+      "./src/domains/**/infra/database/entities/*.ts"
+    ],
+    "migrations": [
+      "./src/shared/infra/database/migrations/*.ts"
+    ],
+    "cli": {
+      "migrationsDir": "./src/shared/infra/database/migrations"
+    }
+  },
+  {
+    "name": "mongo",
+    "type": "mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "username": "example",
+    "password": "example",
+    "entities": [
+      "./src/domains/**/infra/database/schemas/*.ts"
+    ]
+  }
+]
