@@ -106,4 +106,9 @@ dist
 tmp/*
 !tmp/.gitkeep
 
+# Debug / Management
+
 REQUIREMENTS.md
+
+# TypeORM connections config file
+ormconfig.json
