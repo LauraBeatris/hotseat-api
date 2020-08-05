@@ -20,4 +20,5 @@ app.use('/files', express.static(uploadConfig.uploadFolder));
 app.use(routes);
 app.use(errorsHandler);
 
+// eslint-disable-next-line no-console
 app.listen(8080, () => console.log('🚀 Server Launched'));
