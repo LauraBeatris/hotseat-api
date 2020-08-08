@@ -1,6 +1,7 @@
 import { uuid } from 'uuidv4';
 
 import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories/FakeAppointmentsRepository';
+import FakeNotificationsRepository from '@domains/notifications/fakes/repositories/FakeNotificationsRepository';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
 import AppError from '@shared/errors/AppError';
@@ -10,12 +11,19 @@ import {
 } from '@domains/users/constants/appointments';
 
 let appointmentsRepository: FakeAppointmentsRepository;
+let notificationsRepository: FakeNotificationsRepository;
 let createAppointment: CreateAppointmentService;
 
 describe('Create Appointment', () => {
   beforeEach(() => {
     appointmentsRepository = new FakeAppointmentsRepository();
-    createAppointment = new CreateAppointmentService(appointmentsRepository);
+
+    notificationsRepository = new FakeNotificationsRepository();
+
+    createAppointment = new CreateAppointmentService(
+      appointmentsRepository,
+      notificationsRepository,
+    );
   });
 
   it('should create an appointment', async () => {
@@ -106,5 +114,22 @@ describe('Create Appointment', () => {
         type: 'HAIR_WASHING',
       }),
     ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should send a notification to the provider after creating an appointment', async () => {
+    jest
+      .spyOn(Date, 'now')
+      .mockImplementationOnce(() => new Date(2020, 0, 1, 14, 0, 0).getTime());
+
+    const createNotification = jest.spyOn(notificationsRepository, 'create');
+
+    await createAppointment.execute({
+      customer_id: 'meanless customer id',
+      provider_id: 'meanless provider id',
+      date: new Date(2020, 1, 1, BUSINESS_LIMIT_HOUR, 0, 0),
+      type: 'CLASSIC_SHAVING',
+    });
+
+    expect(createNotification).toHaveBeenCalledWith();
   });
 });

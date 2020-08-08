@@ -11,6 +11,8 @@ import IRecoverPasswordRequestsRepository from '@domains/users/interfaces/IRecov
 
 import '@domains/users/providers';
 import './providers';
+import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';
+import NotificationsRepository from '@domains/notifications/infra/database/repositories/NotificationsRepository';
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
@@ -25,6 +27,11 @@ container.registerSingleton<IUsersRepository>(
 container.registerSingleton<IRecoverPasswordRequestsRepository>(
   'RecoverPasswordRequestsMailRepository',
   RecoverPasswordRequestsRepository,
+);
+
+container.registerSingleton<INotificationsRepository>(
+  'NotificationsRepository',
+  NotificationsRepository,
 );
 
 export default container;

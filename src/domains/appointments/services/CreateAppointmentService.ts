@@ -1,11 +1,12 @@
 import { injectable, inject } from 'tsyringe';
-import { startOfHour, isAfter, getHours } from 'date-fns';
+import { startOfHour, isAfter, getHours, format } from 'date-fns';
 
 import Appointment, {
   AppointmentType,
 } from '@domains/appointments/infra/database/entities/Appointment';
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
+import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';
 import {
   BUSINESS_LIMIT_HOUR,
   BUSINESS_START_HOUR,
@@ -23,6 +24,9 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
+
+    @inject('NotificationsRepository')
+    private notificationsRepository: INotificationsRepository,
   ) {}
 
   public async execute({
@@ -69,6 +73,16 @@ class CreateAppointmentService {
       customer_id,
       date: appointmentDate,
       type,
+    });
+
+    const notificationAppointmentDate = format(
+      appointmentDate,
+      'dd-MM-yyyy HH:mm',
+    );
+
+    await this.notificationsRepository.create({
+      content: `You have an appointment schedule to ${notificationAppointmentDate}`,
+      recipient_id: provider_id,
     });
 
     return appointment;
