@@ -9,6 +9,7 @@ import {
   BUSINESS_LIMIT_HOUR,
   BUSINESS_START_HOUR,
 } from '@domains/users/constants/appointments';
+import APPOINTMENT_TYPES from '@domains/appointments/enums/appointmentTypes';
 
 let appointmentsRepository: FakeAppointmentsRepository;
 let notificationsRepository: FakeNotificationsRepository;
@@ -34,7 +35,7 @@ describe('Create Appointment', () => {
     const appointment = await createAppointment.execute({
       provider_id: 'meanless provider id',
       customer_id: 'meanless customer id',
-      type: 'CLASSIC_SHAVING',
+      type: APPOINTMENT_TYPES[2],
       date: new Date(2020, 1, 1, 15, 0, 0),
     });
 
@@ -49,7 +50,7 @@ describe('Create Appointment', () => {
     const appointmentData = Object.assign(new Appointment(), {
       provider_id: 'meanless provider id',
       customer_id: 'meanless customer id',
-      type: 'CLASSIC_SHAVING',
+      type: APPOINTMENT_TYPES[1],
       date: new Date(2020, 1, 1, 15, 0, 0),
     });
 
@@ -72,7 +73,7 @@ describe('Create Appointment', () => {
         provider_id: providerId,
         customer_id: providerId,
         date: new Date(2020, 1, 1, 15, 0, 0),
-        type: 'CLASSIC_SHAVING',
+        type: APPOINTMENT_TYPES[1],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -87,7 +88,7 @@ describe('Create Appointment', () => {
         provider_id: 'meanless provider id',
         customer_id: 'meanless customer id',
         date: new Date(2020, 1, 1, 13, 0, 0),
-        type: 'CLASSIC_SHAVING',
+        type: APPOINTMENT_TYPES[2],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -102,7 +103,7 @@ describe('Create Appointment', () => {
         customer_id: 'meanless customer id',
         provider_id: 'meanless provider id',
         date: new Date(2020, 1, 1, BUSINESS_START_HOUR - 1, 0, 0),
-        type: 'CLASSIC_SHAVING',
+        type: APPOINTMENT_TYPES[1],
       }),
     ).rejects.toBeInstanceOf(AppError);
 
@@ -111,7 +112,7 @@ describe('Create Appointment', () => {
         customer_id: 'meanless customer id',
         provider_id: 'meanless provider id',
         date: new Date(2020, 1, 1, BUSINESS_LIMIT_HOUR + 1, 0, 0),
-        type: 'HAIR_WASHING',
+        type: APPOINTMENT_TYPES[0],
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -127,9 +128,9 @@ describe('Create Appointment', () => {
       customer_id: 'meanless customer id',
       provider_id: 'meanless provider id',
       date: new Date(2020, 1, 1, BUSINESS_LIMIT_HOUR, 0, 0),
-      type: 'CLASSIC_SHAVING',
+      type: APPOINTMENT_TYPES[2],
     });
 
-    expect(createNotification).toHaveBeenCalledWith();
+    expect(createNotification).toHaveBeenCalled();
   });
 });

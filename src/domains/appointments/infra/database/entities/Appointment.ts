@@ -9,8 +9,10 @@ import {
 } from 'typeorm';
 
 import User from '@domains/users/infra/database/entities/User';
+import APPOINTMENT_TYPES, {
+  AppointmentType,
+} from '@domains/appointments/enums/appointmentTypes';
 
-export type AppointmentType = 'HAIR_CARE' | 'HAIR_WASHING' | 'CLASSIC_SHAVING';
 @Entity('appointments')
 class Appointment {
   @PrimaryGeneratedColumn('uuid')
@@ -35,8 +37,8 @@ class Appointment {
 
   @Column({
     type: 'enum',
-    enum: ['HAIR_CARE', 'HAIR_WASHING', 'CLASSIC_SHAVING'],
-    default: `'HAIR_CARE'`,
+    enum: APPOINTMENT_TYPES,
+    default: `${APPOINTMENT_TYPES[0]}`,
   })
   type: AppointmentType;
 

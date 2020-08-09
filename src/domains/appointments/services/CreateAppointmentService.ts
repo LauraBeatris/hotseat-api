@@ -1,9 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import { startOfHour, isAfter, getHours, format } from 'date-fns';
 
-import Appointment, {
-  AppointmentType,
-} from '@domains/appointments/infra/database/entities/Appointment';
+import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';
@@ -11,6 +9,7 @@ import {
   BUSINESS_LIMIT_HOUR,
   BUSINESS_START_HOUR,
 } from '@domains/users/constants/appointments';
+import { AppointmentType } from '@domains/appointments/enums/appointmentTypes';
 
 interface IRequest {
   provider_id: string;

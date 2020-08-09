@@ -1,3 +1,4 @@
+import APPOINTMENT_TYPES from '@domains/appointments/enums/appointmentTypes';
 import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories/FakeAppointmentsRepository';
 import ListProviderAppointmentsService from '@domains/appointments/services/ListProviderAppointmentsService';
 
@@ -20,14 +21,14 @@ describe('List Provider Appointments', () => {
       customer_id,
       provider_id,
       date: new Date(2020, 8, 14, 14, 0, 0),
-      type: 'CLASSIC_SHAVING',
+      type: APPOINTMENT_TYPES[1],
     });
 
     const appointment2 = await appointmentsRepository.create({
       customer_id,
       provider_id,
       date: new Date(2020, 8, 14, 15, 0, 0),
-      type: 'HAIR_CARE',
+      type: APPOINTMENT_TYPES[0],
     });
 
     jest
@@ -58,14 +59,14 @@ describe('List Provider Appointments', () => {
       provider_id,
       customer_id,
       date: new Date(2020, 8, 14, 8, 0, 0),
-      type: 'HAIR_CARE',
+      type: APPOINTMENT_TYPES[0],
     });
 
     const appointment2 = await appointmentsRepository.create({
       provider_id,
       customer_id,
       date: new Date(2020, 8, 14, 9, 0, 0),
-      type: 'CLASSIC_SHAVING',
+      type: APPOINTMENT_TYPES[2],
     });
 
     jest
