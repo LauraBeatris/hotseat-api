@@ -5,7 +5,7 @@ import container from '@shared/container';
 
 class ProviderDayAvailabilityController {
   async index(request: Request, response: Response): Promise<Response> {
-    const { year, month, day } = request.body;
+    const { year, month, day } = request.query;
     const { provider_id } = request.params;
 
     const listProviderDayAvailabilityService = container.resolve(
@@ -14,9 +14,9 @@ class ProviderDayAvailabilityController {
 
     const availability = await listProviderDayAvailabilityService.execute({
       provider_id,
-      year,
-      month,
-      day,
+      month: Number(month),
+      year: Number(year),
+      day: Number(day),
     });
 
     return response.json(availability);

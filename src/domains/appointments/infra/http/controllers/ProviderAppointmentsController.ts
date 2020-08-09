@@ -9,7 +9,7 @@ class ProviderAppointmentsController {
     request: Request,
     response: Response,
   ): Promise<Response<Appointments[]>> {
-    const { day, year, month } = request.body;
+    const { day, year, month } = request.query;
     const provider_id = request.user.id;
 
     const listProviderAppointments = container.resolve(
@@ -17,9 +17,9 @@ class ProviderAppointmentsController {
     );
 
     const appointments = await listProviderAppointments.execute({
-      day,
-      year,
-      month,
+      day: Number(day),
+      year: Number(year),
+      month: Number(month),
       provider_id,
     });
 
