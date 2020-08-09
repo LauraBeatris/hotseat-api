@@ -7,7 +7,7 @@ import profileRoutes from '@domains/users/infra/http/routes/profile.routes';
 import appointmentsRoutes from '@domains/appointments/infra/http/routes/appointments.routes';
 import providersRoutes from '@domains/appointments/infra/http/routes/providers.routes';
 
-import authMiddleware from '@shared/infra/http/middlewares/verifyAuthentication';
+import authMiddleware from '@shared/infra/http/middlewares/auth';
 
 const routes = Router();
 

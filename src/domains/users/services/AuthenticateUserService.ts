@@ -48,12 +48,16 @@ class AuthenticateUserService {
       throw new AppError(errorMessage);
     }
 
+    const { jwt } = authConfig;
+
     const token = sign(
       {
         sub: userExists.id,
-        expiresIn: authConfig.jwt.expiresIn,
       },
-      authConfig.jwt.secret,
+      jwt.secret,
+      {
+        expiresIn: jwt.expiresIn,
+      },
     );
 
     return {
