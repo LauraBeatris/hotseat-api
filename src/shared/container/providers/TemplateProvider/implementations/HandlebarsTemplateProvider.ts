@@ -1,8 +1,8 @@
 import handlebars from 'handlebars';
 import fs from 'fs';
 
-import IParseTemplateDTO from '../dtos/IParseTemplateDTO';
-import ITemplateProvider from '../interfaces/ITemplateProvider';
+import IParseTemplateDTO from '@shared/container/providers/TemplateProvider/dtos/IParseTemplateDTO';
+import ITemplateProvider from '@shared/container/providers/TemplateProvider/interfaces/ITemplateProvider';
 
 export default class HandlebarsTemplateProvider implements ITemplateProvider {
   public async parse({

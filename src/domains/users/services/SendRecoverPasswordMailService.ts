@@ -3,8 +3,8 @@ import path from 'path';
 
 import IMailProvider from '@shared/container/providers/MailProvider/interfaces/IMailProvider';
 import AppError from '@shared/errors/AppError';
-import IUsersRepository from '../interfaces/IUsersRepository';
-import IRecoverPasswordRequests from '../interfaces/IRecoverPasswordRequestsRepository';
+import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
+import IRecoverPasswordRequests from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
 
 interface IRequest {
   email: string;

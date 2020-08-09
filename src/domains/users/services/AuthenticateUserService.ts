@@ -5,7 +5,7 @@ import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
-import IHashProvider from '../providers/HashProvider/interfaces/IHashProvider';
+import IHashProvider from '@domains/users/providers/HashProvider/interfaces/IHashProvider';
 
 interface IRequest {
   email: string;

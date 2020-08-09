@@ -1,6 +1,6 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
 import AppError from '@shared/errors/AppError';
-import ListProvidersService from '../ListProvidersService';
+import ListProvidersService from '@domains/appointments/services/ListProvidersService';
 
 let usersRepository: FakeUsersRepository;
 let listProvidersService: ListProvidersService;

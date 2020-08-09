@@ -1,4 +1,4 @@
-import IStorageProvider from '../interfaces/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/StorageProvider/interfaces/IStorageProvider';
 
 class FakeDiskStorageProvider implements IStorageProvider {
   private uploads: string[] = [];

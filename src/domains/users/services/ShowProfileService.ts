@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
-import User from '../infra/database/entities/User';
+import User from '@domains/users/infra/database/entities/User';
 
 interface IRequest {
   user_id: string;

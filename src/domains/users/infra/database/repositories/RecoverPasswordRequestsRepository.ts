@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 import { addHours } from 'date-fns';
 
 import { RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS } from '@domains/users/constants/resetPassword';
-import RecoverPasswordRequest from '../entities/RecoverPasswordRequest';
+import RecoverPasswordRequest from '@domains/users/infra/database/entities/RecoverPasswordRequest';
 
 class RecoverPasswordRequestsRepository
   implements IRecoverPasswordRequestsRepository {

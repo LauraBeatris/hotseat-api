@@ -1,4 +1,4 @@
-import IParseTemplateDTO from '../../TemplateProvider/dtos/IParseTemplateDTO';
+import IParseTemplateDTO from '@shared/container/providers/TemplateProvider/dtos/IParseTemplateDTO';
 
 interface IMailContact {
   name: string;

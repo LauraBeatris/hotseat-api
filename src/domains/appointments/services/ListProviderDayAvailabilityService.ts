@@ -7,7 +7,7 @@ import {
 } from '@domains/users/constants/appointments';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
-import IAppointmentsRepository from '../interfaces/IAppointmentsRepository';
+import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 
 interface IRequest {
   provider_id: string;
