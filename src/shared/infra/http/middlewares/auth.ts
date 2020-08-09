@@ -3,6 +3,7 @@ import { verify } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
+import tokenValidator from '@shared/infra/http/validators/token';
 
 interface IJWTPayload {
   sub: string;
@@ -10,7 +11,7 @@ interface IJWTPayload {
 
 const authMiddleware = (
   request: Request,
-  response: Response,
+  _response: Response,
   next: NextFunction,
 ): void => {
   try {
@@ -22,11 +23,21 @@ const authMiddleware = (
 
     const [, token] = authorization?.split(' ');
 
-    const { sub } = verify(token, authConfig.jwt.secret) as IJWTPayload;
+    verify(token, authConfig.jwt.secret, (err, decoded) => {
+      if (err) {
+        throw new AppError(err.message, 400);
+      }
 
-    request.user = {
-      id: sub,
-    };
+      if (!decoded) {
+        throw new AppError('Invalid JWT token', 400);
+      }
+
+      const payload = decoded as IJWTPayload;
+
+      request.user = {
+        id: payload.sub,
+      };
+    });
 
     return next();
   } catch (error) {
@@ -34,4 +45,4 @@ const authMiddleware = (
   }
 };
 
-export default authMiddleware;
+export default [tokenValidator, authMiddleware];
