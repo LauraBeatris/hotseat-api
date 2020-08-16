@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import User from '@domains/users/infra/database/entities/User';
 import CreateUserService from '@domains/users/services/CreateUserService';
@@ -20,8 +21,6 @@ export default class UsersController {
       is_provider,
     });
 
-    delete user.password;
-
-    return response.json(user);
+    return response.json(classToClass(user));
   }
 }

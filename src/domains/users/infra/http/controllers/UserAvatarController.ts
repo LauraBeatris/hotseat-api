@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import UploadAvatarService from '@domains/users/services/UploadAvatarService';
 import container from '@shared/container';
@@ -19,8 +20,6 @@ export default class UserAvatarController {
       avatarFilename,
     });
 
-    delete userWithAvatar.password;
-
-    return response.json(userWithAvatar);
+    return response.json(classToClass(userWithAvatar));
   }
 }

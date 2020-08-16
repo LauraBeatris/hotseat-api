@@ -1,4 +1,6 @@
 import { injectable, inject } from 'tsyringe';
+import { classToClass } from 'class-transformer';
+
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
 import User from '@domains/users/infra/database/entities/User';
@@ -21,9 +23,7 @@ class ShowProfileService {
       throw new AppError('User not found', 404);
     }
 
-    delete user.password;
-
-    return user;
+    return classToClass(user);
   }
 }
 

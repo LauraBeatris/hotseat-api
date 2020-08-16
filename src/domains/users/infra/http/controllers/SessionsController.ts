@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import AuthenticateUserService from '@domains/users/services/AuthenticateUserService';
 import container from '@shared/container';
+import { classToClass } from 'class-transformer';
 
 export default class SessionsController {
   public async post(request: Request, response: Response): Promise<Response> {
@@ -14,8 +15,6 @@ export default class SessionsController {
       password,
     });
 
-    delete user.password;
-
-    return response.json({ user, token });
+    return response.json({ user: classToClass(user), token });
   }
 }
