@@ -31,7 +31,7 @@ describe('Authenticate User', () => {
     expect(authPayload).toHaveProperty('user');
   });
 
-  it('should not authenticate an unexisting user', async () => {
+  it('should not authenticate an nonexisting user', async () => {
     const userData = {
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',

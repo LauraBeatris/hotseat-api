@@ -64,10 +64,10 @@ describe('Upload User Avatar', () => {
     expect(user.avatar).toBe(newFilename);
   });
 
-  it('should not upload avatar for unexisting user', async () => {
+  it('should not upload avatar for nonexisting user', async () => {
     await expect(
       uploadAvatarService.execute({
-        user_id: 'unexisting user id',
+        user_id: 'nonexisting user id',
         avatarFilename: 'meaningless-filename.jpg',
       }),
     ).rejects.toBeInstanceOf(AppError);

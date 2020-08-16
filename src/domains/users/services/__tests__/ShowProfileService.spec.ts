@@ -23,9 +23,9 @@ describe('Show Profile', () => {
     expect(profile?.name).toBe(user.name);
   });
 
-  it('should not show the profile of an unexisting user', async () => {
+  it('should not show the profile of an nonexisting user', async () => {
     await expect(
-      showProfileService.execute({ user_id: 'unexisting user id' }),
+      showProfileService.execute({ user_id: 'nonexisting user id' }),
     ).rejects.toBeInstanceOf(AppError);
   });
 });

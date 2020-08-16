@@ -43,10 +43,10 @@ describe('Send Recover Password Mail', () => {
     expect(sendMail).toHaveBeenCalled();
   });
 
-  it('should not be able to send mails to unexisting users', async () => {
+  it('should not be able to send mails to nonexisting users', async () => {
     await expect(
       sendRecoverPasswordMailService.execute({
-        email: 'unexistinguser@test.com',
+        email: 'nonexistinguser@test.com',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

@@ -70,13 +70,13 @@ describe('List Provider Month Availability', () => {
     );
   });
 
-  it('should not list the month availability an unexisting provider', async () => {
+  it('should not list the month availability an nonexisting provider', async () => {
     const meanlessMonth = 1;
     const meanlessYear = 2020;
 
     await expect(
       listProviderMonthAvailabilityService.execute({
-        provider_id: 'unexisting provider id',
+        provider_id: 'nonexisting provider id',
         month: meanlessMonth,
         year: meanlessYear,
       }),

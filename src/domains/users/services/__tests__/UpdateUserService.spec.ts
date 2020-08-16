@@ -44,12 +44,12 @@ describe('Update User', () => {
     expect(updatedUser.password).toBe(updatedUserData.password);
   });
 
-  it('should not be able to update an unexisting user', async () => {
+  it('should not be able to update an nonexisting user', async () => {
     await expect(
       updateUserService.execute({
-        user_id: 'unexisting user id',
-        email: 'unexistingemail@text.com',
-        name: 'unexisting name',
+        user_id: 'nonexisting user id',
+        email: 'nonexistingemail@text.com',
+        name: 'nonexisting name',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });

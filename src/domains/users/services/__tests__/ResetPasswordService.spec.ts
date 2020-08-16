@@ -53,7 +53,7 @@ describe('Reset User Password', () => {
     expect(generateHash).toBeCalledWith(updatedUser?.password);
   });
 
-  it('should not be able to reset the password of an unexisting request', async () => {
+  it('should not be able to reset the password of an nonexisting request', async () => {
     await expect(
       resetPasswordService.execute({
         password: 'new meaningless  password',
@@ -62,7 +62,7 @@ describe('Reset User Password', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('should not be able to reset the password of an unexisting user', async () => {
+  it('should not be able to reset the password of an nonexisting user', async () => {
     const { token } = await recoverPasswordRequestsRepository.create(
       'non existing user id',
     );

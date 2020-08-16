@@ -28,7 +28,7 @@ class SendRecoverPasswordMailService {
 
     if (!checkIfUserExists) {
       throw new AppError(
-        'Cannot send recover password mail to an unexisting user',
+        'Cannot send recover password mail to an nonexisting user',
       );
     }
 
