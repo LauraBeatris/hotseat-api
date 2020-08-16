@@ -6,9 +6,10 @@ import {
   UpdateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
+import { STATIC_FILES_ROUTE } from '@shared/constants/upload';
 
 @Entity('users')
 class User {
@@ -39,6 +40,11 @@ class User {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
+
+  @Expose({ name: 'avatar' })
+  getAvatarUrl(): string {
+    return `${process.env.APP_CLIENT_URL}${STATIC_FILES_ROUTE}/${this.avatar}`;
+  }
 }
 
 export default User;

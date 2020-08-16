@@ -1,4 +1,5 @@
 import { injectable, inject } from 'tsyringe';
+import { classToClass } from 'class-transformer';
 
 import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
@@ -66,7 +67,7 @@ class UpdateUserService {
 
     await this.usersRepository.save(user);
 
-    return user;
+    return classToClass(user);
   }
 }
 
