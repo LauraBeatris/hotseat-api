@@ -42,8 +42,10 @@ class User {
   updated_at: Date;
 
   @Expose({ name: 'avatar' })
-  getAvatarUrl(): string {
-    return `${process.env.APP_CLIENT_URL}${STATIC_FILES_ROUTE}/${this.avatar}`;
+  getAvatarUrl(): string | null {
+    return this.avatar
+      ? `${process.env.APP_CLIENT_URL}${STATIC_FILES_ROUTE}/${this.avatar}`
+      : this.avatar;
   }
 }
 
