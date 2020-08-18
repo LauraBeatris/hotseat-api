@@ -1,5 +1,8 @@
 import { container } from 'tsyringe';
 
+import '@domains/users/providers';
+import './providers';
+
 import AppointmentsRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 
@@ -9,8 +12,6 @@ import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import RecoverPasswordRequestsRepository from '@domains/users/infra/database/repositories/RecoverPasswordRequestsRepository';
 import IRecoverPasswordRequestsRepository from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
 
-import '@domains/users/providers';
-import './providers';
 import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';
 import NotificationsRepository from '@domains/notifications/infra/database/repositories/NotificationsRepository';
 
