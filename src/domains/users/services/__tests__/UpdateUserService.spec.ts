@@ -41,7 +41,6 @@ describe('Update User', () => {
 
     expect(updatedUser.name).toBe(updatedUserData.name);
     expect(updatedUser.email).toBe(updatedUserData.email);
-    expect(updatedUser.password).toBe(updatedUserData.password);
   });
 
   it('should not be able to update an nonexisting user', async () => {
