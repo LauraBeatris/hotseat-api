@@ -1,10 +1,5 @@
-enum MailProvider {
-  ETHEREAL = 'ETHEREAL',
-  SES = 'SES',
-}
-
 export interface IMailConfig {
-  provider: MailProvider;
+  provider: 'ethereal' | 'ses';
   defaults: {
     from: {
       address: string;
@@ -13,19 +8,14 @@ export interface IMailConfig {
   };
 }
 
-export const getMailProvider = (): MailProvider =>
-  process.env.NODE_ENV !== 'production'
-    ? MailProvider.SES
-    : MailProvider.ETHEREAL;
-
-const mailConfig: IMailConfig = {
-  provider: getMailProvider(),
+const mailConfig = {
+  provider: process.env.MAIL_PROVIDER,
   defaults: {
     from: {
       address: 'laura@lauradeveloper.com.br',
       name: 'Laura Beatris',
     },
   },
-};
+} as IMailConfig;
 
 export default mailConfig;
