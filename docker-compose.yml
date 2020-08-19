@@ -17,3 +17,17 @@ services:
     ports:
       - "27017:27017"
     command: [--auth]
+  redis:
+    image: redis:4.0.5-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    networks:
+      - redis-net
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+volumes:
+  redis-data:
+networks:
+  redis-net:
