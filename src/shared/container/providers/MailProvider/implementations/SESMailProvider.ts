@@ -5,7 +5,6 @@ import { injectable, inject } from 'tsyringe';
 import IMailProvider from '@shared/container/providers/MailProvider/interfaces/IMailProvider';
 import ISendMailDTO from '@shared/container/providers/MailProvider/dtos/ISendMailDTO';
 import ITemplateProvider from '@shared/container/providers/TemplateProvider/interfaces/ITemplateProvider';
-import { SES_API_VERSION } from '@config/ses';
 import mailConfig from '@config/mail';
 
 @injectable()
@@ -18,7 +17,7 @@ class SESMailProvider implements IMailProvider {
   ) {
     this.client = nodemailer.createTransport({
       SES: new aws.SES({
-        apiVersion: SES_API_VERSION,
+        apiVersion: mailConfig.configs.sesConfig.SES_API_VERSION,
         region: process.env.AWS_DEFAULT_REGION,
       }),
     });

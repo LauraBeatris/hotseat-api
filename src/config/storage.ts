@@ -9,7 +9,7 @@ export interface IStorageConfig {
 }
 
 const storageConfig: IStorageConfig = {
-  provider: process.env.STORAGE_PROVIDER,
+  provider: process.env.STORAGE_PROVIDER || 'disk',
   s3: {
     bucket: process.env.S3_BUCKET_NAME,
     ACL: 'public-read',
