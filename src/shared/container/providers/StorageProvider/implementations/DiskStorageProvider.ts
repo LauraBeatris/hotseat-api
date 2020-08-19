@@ -1,24 +1,22 @@
 import fs from 'fs';
-import path from 'path';
-import uploadConfig from '@config/upload';
 import IStorageProvider from '@shared/container/providers/StorageProvider/interfaces/IStorageProvider';
+import getFileTemporaryPath from '@shared/utils/getFileTemporaryPath';
+import getFileUploadPath from '@shared/utils/getFileUploadPath';
 
 class DiskStorageProvider implements IStorageProvider {
-  public async saveFile(file: string): Promise<string> {
-    const fileTemporaryPath = path.resolve(uploadConfig.tmpFolder, file);
-    const fileUploadPath = path.resolve(uploadConfig.uploadFolder, file);
+  public async saveFile(filename: string): Promise<string> {
+    const fileTemporaryPath = getFileTemporaryPath(filename);
+    const fileUploadPath = getFileUploadPath(filename);
 
     await fs.promises.rename(fileTemporaryPath, fileUploadPath);
 
-    return file;
+    return filename;
   }
 
-  public async deleteFile(file: string): Promise<void> {
-    const fileUploadPath = path.resolve(uploadConfig.uploadFolder, file);
+  public async deleteFile(filename: string): Promise<void> {
+    const fileUploadPath = getFileUploadPath(filename);
 
-    const verifyIfFileExists = fs.promises.stat(
-      path.resolve(uploadConfig.uploadFolder, file),
-    );
+    const verifyIfFileExists = fs.promises.stat(fileUploadPath);
 
     verifyIfFileExists.then(async () => {
       await fs.promises.unlink(fileUploadPath);
