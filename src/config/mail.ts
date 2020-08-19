@@ -1,4 +1,7 @@
-type MailProvider = 'ethereal' | 'ses';
+enum MailProvider {
+  ETHEREAL = 'ETHEREAL',
+  SES = 'SES',
+}
 
 export interface IMailConfig {
   provider: MailProvider;
@@ -10,15 +13,10 @@ export interface IMailConfig {
   };
 }
 
-export const mailProviders: Record<string, MailProvider> = {
-  ethereal: 'ethereal',
-  ses: 'ses',
-};
-
 export const getMailProvider = (): MailProvider =>
   process.env.NODE_ENV !== 'production'
-    ? mailProviders.ses
-    : mailProviders.ethereal;
+    ? MailProvider.SES
+    : MailProvider.ETHEREAL;
 
 const mailConfig: IMailConfig = {
   provider: getMailProvider(),

@@ -6,8 +6,8 @@ import DiskStorageProvider from './implementations/DiskStorageProvider';
 import IStorageProvider from './interfaces/IStorageProvider';
 
 const mapStorageProviders = {
-  disk: DiskStorageProvider,
-  s3: DiskStorageProvider, // TODO - Add S3StorageProvider
+  DISK: DiskStorageProvider,
+  S3: DiskStorageProvider, // TODO - Add S3StorageProvider
 };
 
 container.registerSingleton<IStorageProvider>(
