@@ -28,6 +28,7 @@ class UploadAvatarService {
     }
 
     const userAlreadyHasAvatar = !!userExists.avatar;
+
     if (userAlreadyHasAvatar) {
       this.storageProvider.deleteFile(userExists.avatar);
     }
