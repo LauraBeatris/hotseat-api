@@ -6,7 +6,7 @@ import Appointment from '@domains/appointments/infra/database/entities/Appointme
 import ICreateAppointmentDTO from '@domains/appointments/dtos/ICreateAppointmentDTO';
 import IFindByMonthFromProviderDTO from '@domains/appointments/dtos/IFindByMonthFromProviderDTO';
 import IFindByDayFromProviderDTO from '@domains/appointments/dtos/IFindByDayFromProviderDTO';
-import getMonth from '@shared/utils/getMonth';
+import getMonth from '@shared/utils/month';
 
 class AppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
