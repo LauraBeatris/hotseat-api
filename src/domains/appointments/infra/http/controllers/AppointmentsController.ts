@@ -25,18 +25,12 @@ export default class AppointmentsController {
     const { provider_id, date, type } = request.body;
     const customer_id = request.user.id;
 
-    if (!provider_id || !date || !type) {
-      throw new AppError('Invalid data, some fields are missing!');
-    }
-
-    const parsedDate = parseISO(date);
-
     const createAppointment = container.resolve(CreateAppointmentService);
 
     const appointment = await createAppointment.execute({
       provider_id,
       customer_id,
-      date: parsedDate,
+      date,
       type,
     });
 

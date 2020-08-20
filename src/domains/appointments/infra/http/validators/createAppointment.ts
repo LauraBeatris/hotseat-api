@@ -6,7 +6,7 @@ const createAppointmentValidator = celebrate({
     type: Joi.string()
       .valid(...APPOINTMENT_TYPES)
       .required(),
-    date: Joi.date().raw(),
+    date: Joi.date(),
     provider_id: Joi.string().uuid().required(),
   },
 });
