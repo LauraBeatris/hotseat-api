@@ -54,12 +54,4 @@ describe('List Providers', () => {
     expect(providers).not.toContain(user);
     expect(providers).toHaveLength(0);
   });
-
-  it('should not be able to list the providers for an nonexisting user', async () => {
-    await expect(
-      listProvidersService.execute({
-        exceptUserId: 'nonexisting user id',
-      }),
-    ).rejects.toBeInstanceOf(AppError);
-  });
 });
