@@ -10,6 +10,7 @@ import {
   BUSINESS_START_HOUR,
 } from '@domains/users/constants/appointments';
 import { AppointmentType } from '@domains/appointments/enums/appointmentTypes';
+import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
 
 interface IRequest {
   provider_id: string;
@@ -26,6 +27,9 @@ class CreateAppointmentService {
 
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationsRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -83,6 +87,10 @@ class CreateAppointmentService {
       content: `You have an appointment schedule to ${notificationAppointmentDate}`,
       recipient_id: provider_id,
     });
+
+    this.cacheProvider.invalidate(
+      `appointments-list:${provider_id}:${format(appointmentDate, 'yyyy-M-d')}`,
+    );
 
     return appointment;
   }
