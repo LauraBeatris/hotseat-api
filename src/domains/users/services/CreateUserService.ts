@@ -5,6 +5,7 @@ import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '@domains/users/providers/HashProvider/interfaces/IHashProvider';
 import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
+import { PROVIDERS_LIST_CACHE_KEY_PREFIX } from '@shared/constants/cacheKeys';
 
 interface IRequest {
   name: string;
@@ -51,7 +52,7 @@ class CreateUserService {
     });
 
     if (is_provider) {
-      this.cacheProvider.invalidateByPrefix('providers-list');
+      this.cacheProvider.invalidateByPrefix(PROVIDERS_LIST_CACHE_KEY_PREFIX);
     }
 
     return user;

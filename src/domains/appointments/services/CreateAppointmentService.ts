@@ -11,6 +11,7 @@ import {
 } from '@domains/users/constants/appointments';
 import { AppointmentType } from '@domains/appointments/enums/appointmentTypes';
 import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
+import { getProviderAppointmentsListCacheKey } from '@shared/constants/cacheKeys';
 
 interface IRequest {
   provider_id: string;
@@ -89,7 +90,7 @@ class CreateAppointmentService {
     });
 
     this.cacheProvider.invalidate(
-      `appointments-list:${provider_id}:${format(appointmentDate, 'yyyy-M-d')}`,
+      getProviderAppointmentsListCacheKey(provider_id, appointmentDate),
     );
 
     return appointment;

@@ -4,6 +4,8 @@ import { isBefore } from 'date-fns';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
+import { getProviderAppointmentsListCacheKey } from '@shared/constants/cacheKeys';
+import { parseMonthToJSMonth } from '@shared/utils/month';
 
 interface IRequest {
   day: number;
@@ -32,7 +34,10 @@ class ListProviderAppointmentsService {
     month,
     provider_id,
   }: IRequest): Promise<IResponse[]> {
-    const appointmentsListCacheKey = `appointments-list:${provider_id}:${year}-${month}-${day}`;
+    const appointmentsListCacheKey = getProviderAppointmentsListCacheKey(
+      provider_id,
+      new Date(year, parseMonthToJSMonth(month), day),
+    );
 
     let appointments = await this.cacheProvider.get<Appointment[]>(
       appointmentsListCacheKey,

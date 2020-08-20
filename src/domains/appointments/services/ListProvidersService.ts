@@ -3,6 +3,7 @@ import { injectable, inject } from 'tsyringe';
 import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
+import { getProvidersListCacheKey } from '@shared/constants/cacheKeys';
 
 interface IRequest {
   exceptUserId: string;
@@ -18,7 +19,7 @@ class ListProvidersService {
   ) {}
 
   public async execute({ exceptUserId }: IRequest): Promise<User[]> {
-    const providersListCacheKey = `providers-list:${exceptUserId}`;
+    const providersListCacheKey = getProvidersListCacheKey(exceptUserId);
 
     let providers = await this.cacheProvider.get<User[]>(providersListCacheKey);
 
