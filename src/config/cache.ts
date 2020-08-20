@@ -7,15 +7,13 @@ interface ICacheConfig {
   };
 }
 
-const getRedisPassword = (): string | undefined =>
-  process.env.NODE_ENV === 'production'
-    ? process.env.REDIS_PASSWORD
-    : undefined;
-
 export const redisConfig: RedisOptions = {
   port: Number(process.env.REDIS_PORT) || 6379,
   host: process.env.REDIS_HOST || '127.0.0.1',
-  password: getRedisPassword(),
+  password:
+    process.env.NODE_ENV === 'production'
+      ? process.env.REDIS_PASSWORD
+      : undefined,
 };
 
 const cacheConfig = {

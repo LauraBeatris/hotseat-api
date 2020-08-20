@@ -11,9 +11,11 @@ import '@shared/infra/database';
 import uploadConfig from '@config/upload';
 import { STATIC_FILES_ROUTE } from '@shared/constants/upload';
 import routes from './routes';
+import rateLimiterMiddleware from './middlewares/rateLimiter';
 
 const app = express();
 
+app.use(rateLimiterMiddleware);
 app.use(cors());
 app.use(express.json());
 app.use(STATIC_FILES_ROUTE, express.static(uploadConfig.uploadFolder));
