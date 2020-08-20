@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
-import AppError from '@shared/errors/AppError';
+import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
 
 interface IRequest {
   exceptUserId: string;
@@ -12,18 +12,23 @@ class ListProvidersService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({ exceptUserId }: IRequest): Promise<User[]> {
-    const user = await this.usersRepository.findById(exceptUserId);
+    const providersListCacheKey = `providers-list:${exceptUserId}`;
 
-    if (!user) {
-      throw new AppError('User not found', 404);
+    let providers = await this.cacheProvider.get<User[]>(providersListCacheKey);
+
+    if (!providers) {
+      providers = await this.usersRepository.findProviders({
+        exceptUserId,
+      });
+
+      await this.cacheProvider.save<User[]>(providersListCacheKey, providers);
     }
-
-    const providers = await this.usersRepository.findProviders({
-      exceptUserId,
-    });
 
     return providers;
   }

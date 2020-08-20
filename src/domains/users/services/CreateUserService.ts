@@ -4,6 +4,7 @@ import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '@domains/users/providers/HashProvider/interfaces/IHashProvider';
+import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
 
 interface IRequest {
   name: string;
@@ -20,6 +21,9 @@ class CreateUserService {
 
     @inject('HashProvider')
     private bcryptHashProvider: IHashProvider,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -45,6 +49,10 @@ class CreateUserService {
       password: passwordHash,
       is_provider,
     });
+
+    if (is_provider) {
+      this.cacheProvider.invalidateByPrefix('providers-list');
+    }
 
     return user;
   }
