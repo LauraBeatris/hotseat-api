@@ -64,12 +64,12 @@ class ListProviderDayAvailabilityService {
         appointment => getHours(appointment.date) === hour,
       );
 
-      const choosedDate = new Date(year, month - 1, day, hour);
+      const chosenDate = new Date(year, month - 1, day, hour);
 
       return {
         hour,
         available:
-          !hasAppointmentInThisHour && isAfter(choosedDate, currentDate),
+          !hasAppointmentInThisHour && isAfter(chosenDate, currentDate),
       };
     });
 

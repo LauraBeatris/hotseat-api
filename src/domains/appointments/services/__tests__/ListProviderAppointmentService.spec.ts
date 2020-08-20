@@ -1,7 +1,9 @@
 import APPOINTMENT_TYPES from '@domains/appointments/enums/appointmentTypes';
 import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories/FakeAppointmentsRepository';
 import ListProviderAppointmentsService from '@domains/appointments/services/ListProviderAppointmentsService';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 
+let cacheProvider: FakeCacheProvider;
 let appointmentsRepository: FakeAppointmentsRepository;
 let listProviderAppointments: ListProviderAppointmentsService;
 
@@ -10,9 +12,11 @@ const customer_id = 'meanless customer_id';
 
 describe('List Provider Appointments', () => {
   beforeEach(() => {
+    cacheProvider = new FakeCacheProvider();
     appointmentsRepository = new FakeAppointmentsRepository();
     listProviderAppointments = new ListProviderAppointmentsService(
       appointmentsRepository,
+      cacheProvider,
     );
   });
 

@@ -4,7 +4,6 @@ import { parseISO } from 'date-fns';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 import AppointmentsRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
 import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
-import AppError from '@shared/errors/AppError';
 import container from '@shared/container';
 
 export default class AppointmentsController {

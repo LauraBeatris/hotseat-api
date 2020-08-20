@@ -2,6 +2,7 @@ import { uuid } from 'uuidv4';
 
 import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories/FakeAppointmentsRepository';
 import FakeNotificationsRepository from '@domains/notifications/fakes/repositories/FakeNotificationsRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
 import CreateAppointmentService from '@domains/appointments/services/CreateAppointmentService';
 import AppError from '@shared/errors/AppError';
@@ -14,9 +15,12 @@ import APPOINTMENT_TYPES from '@domains/appointments/enums/appointmentTypes';
 let appointmentsRepository: FakeAppointmentsRepository;
 let notificationsRepository: FakeNotificationsRepository;
 let createAppointment: CreateAppointmentService;
+let cacheProvider: FakeCacheProvider;
 
 describe('Create Appointment', () => {
   beforeEach(() => {
+    cacheProvider = new FakeCacheProvider();
+
     appointmentsRepository = new FakeAppointmentsRepository();
 
     notificationsRepository = new FakeNotificationsRepository();
@@ -24,6 +28,7 @@ describe('Create Appointment', () => {
     createAppointment = new CreateAppointmentService(
       appointmentsRepository,
       notificationsRepository,
+      cacheProvider,
     );
   });
 
