@@ -2,7 +2,7 @@ import redis from 'redis';
 import { Request, Response, NextFunction } from 'express';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
-import { redisConfig } from '@config/cache';
+import redisConfig from '@config/redis';
 import AppError from '@shared/errors/AppError';
 
 const redisClient = redis.createClient({
@@ -24,7 +24,9 @@ const rateLimiterMiddleware = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    await rateLimiter.consume(request.ip);
+    if (process.env.NODE_ENV !== 'development') {
+      await rateLimiter.consume(request.ip);
+    }
 
     return next();
   } catch (error) {
