@@ -1,4 +1,4 @@
-import { AppointmentType } from '@domains/appointments/infra/database/entities/Appointment';
+import { AppointmentType } from '@domains/appointments/enums/appointmentTypes';
 
 export default interface ICreateAppointmentDTO {
   provider_id: string;
