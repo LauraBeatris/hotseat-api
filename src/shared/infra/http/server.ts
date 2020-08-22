@@ -5,6 +5,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { errors as validationErrorsHandler } from 'celebrate';
+import * as Sentry from '@sentry/node';
 
 import errorsHandler from '@shared/infra/http/handlers/errors';
 import '@shared/infra/database';
@@ -15,11 +16,17 @@ import rateLimiterMiddleware from './middlewares/rateLimiter';
 
 const app = express();
 
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+});
+
+app.use(Sentry.Handlers.requestHandler());
 app.use(rateLimiterMiddleware);
 app.use(cors());
 app.use(express.json());
 app.use(STATIC_FILES_ROUTE, express.static(uploadConfig.uploadFolder));
 app.use(routes);
+app.use(Sentry.Handlers.errorHandler());
 app.use(validationErrorsHandler());
 app.use(errorsHandler);
 
