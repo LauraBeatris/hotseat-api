@@ -62,7 +62,7 @@ class ListProviderAppointmentsService {
 
       return {
         ...appointment,
-        isPast: isBefore(appointment.date, currentDate),
+        isPast: isBefore(new Date(appointment.date), currentDate),
       };
     });
 
