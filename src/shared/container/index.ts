@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 
-import '@domains/users/providers';
 import './providers';
+import './jobs';
 
 import AppointmentsRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';

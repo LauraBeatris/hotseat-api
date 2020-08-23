@@ -1,12 +1,13 @@
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
 import SendRecoverPasswordRequestMailService from '@domains/users/services/SendRecoverPasswordMailService';
-import FakeMailProvider from '@shared/container/providers/MailProvider/fakes/FakeMailProvider';
+import FakeQueueProvider from '@shared/container/providers/QueueProvider/fakes/FakeQueueProvider';
+
 import AppError from '@shared/errors/AppError';
 import FakeRecoverPasswordRequestsRepository from '@domains/users/fakes/repositories/FakeRecoverPasswordRequestsRepository';
 import { addHours } from 'date-fns';
 import { RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS } from '@domains/users/constants/resetPassword';
 
-let mailProvider: FakeMailProvider;
+let queueProvider: FakeQueueProvider;
 
 let usersRepository: FakeUsersRepository;
 let recoverPasswordRequestRepository: FakeRecoverPasswordRequestsRepository;
@@ -15,13 +16,13 @@ let sendRecoverPasswordMailService: SendRecoverPasswordRequestMailService;
 
 describe('Send Recover Password Mail', () => {
   beforeEach(() => {
-    mailProvider = new FakeMailProvider();
+    queueProvider = new FakeQueueProvider();
 
     recoverPasswordRequestRepository = new FakeRecoverPasswordRequestsRepository();
     usersRepository = new FakeUsersRepository();
 
     sendRecoverPasswordMailService = new SendRecoverPasswordRequestMailService(
-      mailProvider,
+      queueProvider,
       usersRepository,
       recoverPasswordRequestRepository,
     );
@@ -36,7 +37,7 @@ describe('Send Recover Password Mail', () => {
 
     const { email } = await usersRepository.create(userData);
 
-    const sendMail = jest.spyOn(mailProvider, 'sendMail');
+    const sendMail = jest.spyOn(queueProvider, 'processJob');
 
     await sendRecoverPasswordMailService.execute({ email });
 
