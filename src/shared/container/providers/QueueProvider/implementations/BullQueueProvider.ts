@@ -57,7 +57,7 @@ class BullQueueProvider implements IQueueProvider<BullQueue> {
     this.queues.forEach(({ queue, handle }) => {
       queue.process(handle);
 
-      queue.on('error', this.handleJobError);
+      queue.on('failed', this.handleJobError);
     });
   }
 }
