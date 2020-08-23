@@ -16,9 +16,11 @@ import rateLimiterMiddleware from './middlewares/rateLimiter';
 
 const app = express();
 
-Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-});
+if (process.env.NODE_ENV === 'production') {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+  });
+}
 
 app.use(Sentry.Handlers.requestHandler());
 app.use(rateLimiterMiddleware);
