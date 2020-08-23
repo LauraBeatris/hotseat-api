@@ -6,7 +6,9 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore node_modules src/shared/infra/http/server.ts",
+    "dev": "npm-run-all -p dev:*",
+    "dev:queue": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore node_modules src/shared/infra/queue.ts --port 8000",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore node_modules src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest",
     "start": "NODE_ENV=production node dist/shared/infra/http/server.js"
@@ -34,6 +36,7 @@
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.5",
     "ts-jest": "^26.1.1",
     "ts-node-dev": "^1.0.0-pre.44",
