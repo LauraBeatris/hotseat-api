@@ -36,8 +36,6 @@ class BullQueueProvider implements IQueueProvider<BullQueue> {
   public processJob({ key, jobData }: IProcessJobDTO): void {
     const findQueue = this.queues.find(queue => queue.key === key);
 
-    console.log(key);
-
     if (findQueue?.queue) {
       findQueue.queue.add(jobData);
     }
