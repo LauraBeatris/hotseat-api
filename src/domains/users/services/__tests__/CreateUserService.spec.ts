@@ -48,4 +48,17 @@ describe('Create User', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should invalidate the providers list cache if a new provider is registered', async () => {
+    const invalidateByPrefix = jest.spyOn(cacheProvider, 'invalidateByPrefix');
+
+    await createUser.execute({
+      name: 'Jackie Chan Provider',
+      email: 'jackiechanprovider@gmail.com',
+      password: 'meaningless password',
+      is_provider: true,
+    });
+
+    expect(invalidateByPrefix).toHaveBeenCalled();
+  });
 });

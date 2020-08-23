@@ -2,6 +2,7 @@ import FakeAppointmentsRepository from '@domains/appointments/fakes/repositories
 import FakeUsersRepository from '@domains/users/fakes/repositories/FakeUsersRepository';
 import ListProviderDayAvailabilityService from '@domains/appointments/services/ListProviderDayAvailabilityService';
 import APPOINTMENT_TYPES from '@domains/appointments/enums/appointmentTypes';
+import AppError from '@shared/errors/AppError';
 
 let appointmentsRepository: FakeAppointmentsRepository;
 let usersRepository: FakeUsersRepository;
@@ -83,5 +84,16 @@ describe('List Provider Day Availability', () => {
         },
       ]),
     );
+  });
+
+  it('should not list the day availability of a nonexisting provider', async () => {
+    await expect(
+      listProviderDayAvailabilityService.execute({
+        provider_id: 'nonexisting provider id',
+        day: 1,
+        month: 2,
+        year: 2020,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
   });
 });
