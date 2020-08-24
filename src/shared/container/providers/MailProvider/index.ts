@@ -14,3 +14,5 @@ container.registerInstance<IMailProvider>(
   'MailProvider',
   mapMailProviders[mailConfig.provider],
 );
+
+export default mapMailProviders;

@@ -62,11 +62,11 @@ class CreateAppointmentService {
     }
 
     const appointmentHours = getHours(appointmentDate);
-    const isInBussinessHoursRange =
+    const isInBusinessHoursRange =
       appointmentHours >= BUSINESS_START_HOUR &&
       appointmentHours <= BUSINESS_LIMIT_HOUR;
 
-    if (!isInBussinessHoursRange) {
+    if (!isInBusinessHoursRange) {
       throw new AppError(
         "You can't book an appointment in a hour outside the business hours range",
       );

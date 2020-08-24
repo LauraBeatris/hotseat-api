@@ -1,10 +1,12 @@
 import { injectable, inject } from 'tsyringe';
 import path from 'path';
 
-import IMailProvider from '@shared/container/providers/MailProvider/interfaces/IMailProvider';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import IRecoverPasswordRequests from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
+import IQueueProvider from '@shared/container/providers/QueueProvider/interfaces/IQueueProvider';
+import { QueueType } from '@config/queue';
+import { MAIL_PROVIDER_JOB_KEY } from '@shared/container/jobs/keys';
 
 interface IRequest {
   email: string;
@@ -13,8 +15,8 @@ interface IRequest {
 @injectable()
 class SendRecoverPasswordMailService {
   constructor(
-    @inject('MailProvider')
-    private mailProvider: IMailProvider,
+    @inject('QueueProvider')
+    private queueProvider: IQueueProvider<QueueType | unknown>,
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -45,17 +47,20 @@ class SendRecoverPasswordMailService {
       'resetPasswordRequest.hbs',
     );
 
-    await this.mailProvider.sendMail({
-      to: {
-        name: checkIfUserExists.name,
-        address: checkIfUserExists.email,
-      },
-      subject: 'Hotseat - Reset Password Request',
-      templateData: {
-        templateFilePath: recoverPasswordRequestTemplateFilePath,
-        variables: {
+    this.queueProvider.processJob({
+      key: MAIL_PROVIDER_JOB_KEY,
+      jobData: {
+        to: {
           name: checkIfUserExists.name,
-          link: `${process.env.APP_CLIENT_URL}${process.env.APP_CLIENT_PASSWORD_RESET_ROUTE}?token=${token}`,
+          address: checkIfUserExists.email,
+        },
+        subject: 'Hotseat - Reset Password Request',
+        templateData: {
+          templateFilePath: recoverPasswordRequestTemplateFilePath,
+          variables: {
+            name: checkIfUserExists.name,
+            link: `${process.env.APP_CLIENT_URL}${process.env.APP_CLIENT_PASSWORD_RESET_ROUTE}?token=${token}`,
+          },
         },
       },
     });
