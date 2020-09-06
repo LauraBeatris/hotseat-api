@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { getDate, getDaysInMonth } from 'date-fns';
+import { getDate, isAfter, getDaysInMonth } from 'date-fns';
 
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
@@ -53,9 +53,14 @@ class ListProviderMonthAvailabilityService {
         appointment => getDate(appointment.date) === day,
       ).length;
 
+      const availabilityDate = new Date(year, month - 1, day, 23, 59, 59);
+
+      const isOnThePast = isAfter(new Date(Date.now()), availabilityDate);
+
       return {
         day,
-        available: numberOfAppointmentsInDay < MAX_APPOINTMENTS_PER_DAY,
+        available:
+          !isOnThePast && numberOfAppointmentsInDay < MAX_APPOINTMENTS_PER_DAY,
       };
     });
 
