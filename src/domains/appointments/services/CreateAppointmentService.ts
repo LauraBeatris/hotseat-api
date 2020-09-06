@@ -45,7 +45,10 @@ class CreateAppointmentService {
       appointmentDate,
     );
 
-    if (appointmentInTheSameDate) {
+    if (
+      appointmentInTheSameDate &&
+      appointmentInTheSameDate.provider_id === provider_id
+    ) {
       throw new AppError("There's already a appointment booked in that date");
     }
 
