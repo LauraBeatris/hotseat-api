@@ -1,5 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { isBefore } from 'date-fns';
+import { classToClass } from 'class-transformer';
 
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 import Appointment from '@domains/appointments/infra/database/entities/Appointment';
@@ -53,7 +54,7 @@ class ListProviderAppointmentsService {
 
       await this.cacheProvider.save<Appointment[]>(
         appointmentsListCacheKey,
-        appointments,
+        classToClass(appointments),
       );
     }
 

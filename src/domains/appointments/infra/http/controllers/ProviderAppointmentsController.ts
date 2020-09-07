@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 import container from '@shared/container';
 
 import Appointments from '@domains/appointments/infra/database/entities/Appointment';
@@ -23,7 +24,7 @@ class ProviderAppointmentsController {
       provider_id,
     });
 
-    return response.json(appointments);
+    return response.json(classToClass(appointments));
   }
 }
 
