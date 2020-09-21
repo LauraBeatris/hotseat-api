@@ -44,7 +44,7 @@ class User {
   @Expose({ name: 'avatar' })
   getAvatarUrl(): string | null {
     return this.avatar
-      ? `${process.env.APP_CLIENT_URL}${STATIC_FILES_ROUTE}/${this.avatar}`
+      ? `${process.env.SERVER_URL}${STATIC_FILES_ROUTE}/${this.avatar}`
       : this.avatar;
   }
 }
