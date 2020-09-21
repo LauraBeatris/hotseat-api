@@ -41,7 +41,7 @@ class User {
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
 
-  @Expose({ name: 'avatar' })
+  @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
     return this.avatar
       ? `${process.env.SERVER_URL}${STATIC_FILES_ROUTE}/${this.avatar}`
