@@ -113,3 +113,6 @@ REQUIREMENTS.md
 
 # TypeORM connections config file
 ormconfig.json
+
+# VSCode
+.DS_Store
