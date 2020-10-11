@@ -25,11 +25,11 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(Sentry.Handlers.requestHandler());
 
-app.use(rateLimiterMiddleware);
 app.use(cors());
 
 app.use(express.json());
 app.use(STATIC_FILES_ROUTE, express.static(uploadConfig.uploadFolder));
+app.use(rateLimiterMiddleware);
 app.use(routes);
 
 app.use(Sentry.Handlers.errorHandler());
