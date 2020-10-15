@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { isBefore } from 'date-fns';
+import { isBefore, parseISO } from 'date-fns';
 import { classToClass } from 'class-transformer';
 
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
@@ -61,9 +61,14 @@ class ListProviderAppointmentsService {
     const listAppointments = appointments.map(appointment => {
       const currentDate = new Date(Date.now());
 
+      const parseCachedDate =
+        typeof appointment.date === 'string'
+          ? parseISO(appointment.date)
+          : appointment.date;
+
       return {
         ...appointment,
-        isPast: isBefore(new Date(appointment.date), currentDate),
+        isPast: isBefore(parseCachedDate, currentDate),
       };
     });
 

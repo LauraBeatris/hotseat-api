@@ -5,6 +5,7 @@ import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 import AppError from '@shared/errors/AppError';
 import { MAX_APPOINTMENTS_PER_DAY } from '@domains/users/constants/appointments';
+import { parseMonthToJSMonth } from '@shared/utils/month';
 
 interface IRequest {
   provider_id: string;
@@ -53,7 +54,14 @@ class ListProviderMonthAvailabilityService {
         appointment => getDate(appointment.date) === day,
       ).length;
 
-      const availabilityDate = new Date(year, month - 1, day, 23, 59, 59);
+      const availabilityDate = new Date(
+        year,
+        parseMonthToJSMonth(month),
+        day,
+        23,
+        59,
+        59,
+      );
 
       const isOnThePast = isAfter(new Date(Date.now()), availabilityDate);
 
