@@ -23,7 +23,7 @@ const authMiddleware = (
 
     const [, token] = authorization?.split(' ');
 
-    verify(token, authConfig.jwt.secret, (err, decoded) => {
+    verify(token, authConfig.jwt.tokenSecret, (err, decoded) => {
       if (err) {
         throw new AppError(err.message, 403);
       }
