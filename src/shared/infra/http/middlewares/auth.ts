@@ -25,7 +25,7 @@ const authMiddleware = (
 
     verify(token, authConfig.jwt.secret, (err, decoded) => {
       if (err) {
-        throw new AppError(err.message, 400);
+        throw new AppError(err.message, 403);
       }
 
       if (!decoded) {
@@ -41,6 +41,8 @@ const authMiddleware = (
 
     return next();
   } catch (error) {
+    console.log(error);
+
     throw new AppError(error.message);
   }
 };

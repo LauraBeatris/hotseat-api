@@ -1,11 +1,13 @@
 import {
-  JWT_EXPIRES_IN,
-  DEFAULT_APP_SECRET,
-} from '@shared/constants/authentication';
+  JWT_REFRESH_TOKEN_EXPIRES_IN,
+  JWT_TOKEN_EXPIRES_IN,
+} from '@shared/constants/auth';
 
 export default {
   jwt: {
-    expiresIn: JWT_EXPIRES_IN,
-    secret: process.env.APP_SECRET || DEFAULT_APP_SECRET,
+    tokenSecret: process.env.JWT_TOKEN_SECRET ?? 'secret',
+    tokenExpiresIn: JWT_REFRESH_TOKEN_EXPIRES_IN,
+    refreshTokenSecret: process.env.JWT_REFRESH_TOKEN_SECRET ?? 'secret',
+    refreshTokenExpiresIn: JWT_TOKEN_EXPIRES_IN,
   },
 };
