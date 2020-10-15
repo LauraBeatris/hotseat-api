@@ -1,11 +1,10 @@
-import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 
 import User from '@domains/users/infra/database/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
-import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '@domains/users/providers/HashProvider/interfaces/IHashProvider';
+import createTokens from '@shared/utils/auth';
 
 interface IRequest {
   email: string;
@@ -13,8 +12,9 @@ interface IRequest {
 }
 
 interface IAuthenticationResponse {
-  token: string;
   user: User;
+  token: string;
+  refreshToken: string;
 }
 
 @injectable()
@@ -48,21 +48,15 @@ class AuthenticateUserService {
       throw new AppError(errorMessage);
     }
 
-    const { jwt } = authConfig;
-
-    const token = sign(
-      {
-        sub: userExists.id,
-      },
-      jwt.secret,
-      {
-        expiresIn: jwt.expiresIn,
-      },
+    const [token, refreshToken] = await createTokens(
+      userExists.id,
+      userExists.password,
     );
 
     return {
       token,
       user: userExists,
+      refreshToken,
     };
   }
 }

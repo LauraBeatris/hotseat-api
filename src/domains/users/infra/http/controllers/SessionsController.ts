@@ -5,16 +5,22 @@ import container from '@shared/container';
 import { classToClass } from 'class-transformer';
 
 export default class SessionsController {
-  public async post(request: Request, response: Response): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 
     const authenticateUserService = container.resolve(AuthenticateUserService);
 
-    const { user, token } = await authenticateUserService.execute({
-      email,
-      password,
-    });
+    const { user, token, refreshToken } = await authenticateUserService.execute(
+      {
+        email,
+        password,
+      },
+    );
 
-    return response.json({ user: classToClass(user), token });
+    return response.json({
+      user: classToClass(user),
+      token,
+      refreshToken,
+    });
   }
 }

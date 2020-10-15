@@ -3,16 +3,16 @@ import FakeBCryptHashProvider from '@domains/users/providers/HashProvider/fakes/
 import AuthenticateUserService from '@domains/users/services/AuthenticateUserService';
 import AppError from '@shared/errors/AppError';
 
-let usersReposistory: FakeUsersRepository;
+let usersRepository: FakeUsersRepository;
 let hashProvider: FakeBCryptHashProvider;
 let authenticateUserService: AuthenticateUserService;
 
 describe('Authenticate User', () => {
   beforeEach(() => {
-    usersReposistory = new FakeUsersRepository();
     hashProvider = new FakeBCryptHashProvider();
+    usersRepository = new FakeUsersRepository();
     authenticateUserService = new AuthenticateUserService(
-      usersReposistory,
+      usersRepository,
       hashProvider,
     );
   });
@@ -24,11 +24,12 @@ describe('Authenticate User', () => {
       password: 'meaningless password',
     };
 
-    const user = await usersReposistory.create(userData);
+    const user = await usersRepository.create(userData);
     const authPayload = await authenticateUserService.execute(user);
 
     expect(authPayload).toHaveProperty('token');
     expect(authPayload).toHaveProperty('user');
+    expect(authPayload).toHaveProperty('refreshToken');
   });
 
   it('should not authenticate an nonexisting user', async () => {
@@ -44,7 +45,7 @@ describe('Authenticate User', () => {
   });
 
   it('should not authenticate autenticate user if password not matches', async () => {
-    const user = await usersReposistory.create({
+    const user = await usersRepository.create({
       name: 'Jackie Chan',
       email: 'jackiechan@test.com',
       password: 'meaningless password',
