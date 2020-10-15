@@ -54,6 +54,10 @@ describe('List Provider Month Availability', () => {
 
     await Promise.all(fillDayWithAppointments);
 
+    jest
+      .spyOn(Date, 'now')
+      .mockImplementation(() => new Date(2020, 1, 0, 0, 0, 0).getTime());
+
     const availability = await listProviderMonthAvailabilityService.execute({
       provider_id,
       month: 2,
