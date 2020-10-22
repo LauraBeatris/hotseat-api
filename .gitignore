@@ -116,3 +116,6 @@ ormconfig.json
 
 # VSCode
 .DS_Store
+
+# Webstorm
+.idea
