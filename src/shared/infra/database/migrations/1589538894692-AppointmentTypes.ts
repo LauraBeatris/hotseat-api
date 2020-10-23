@@ -9,7 +9,7 @@ export default class AppointmentTypes1589538894692
         name: 'type',
         type: 'enum',
         enum: ['Hair Care', 'Hair Washing', 'Classic Shaving'],
-        default: 'Hair Care',
+        default: "'Hair Care'",
       }),
     );
   }

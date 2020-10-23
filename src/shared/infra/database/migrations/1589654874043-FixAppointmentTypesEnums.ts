@@ -12,7 +12,7 @@ export default class FixAppointmentTypesEnums1589654874043
         type: 'enum',
         enumName: 'appointments_type',
         enum: ['HAIR_CARE', 'HAIR_WASHING', 'CLASSIC_SHAVING'],
-        default: `'HAIR_CARE'`,
+        default: "'HAIR_CARE'",
       }),
     );
   }
