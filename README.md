@@ -8,7 +8,7 @@
 
 > [Click here to see the database model](https://dbdiagram.io/d/5ebff54e39d18f5553ff4c44)
 
-> [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Hotseat%20API&uri=https%3A%2F%2Fgithub.com%2FLauraBeatris%2Fhotseat-api%2Fblob%2Fmaster%2F.github%2Fhotseat.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Hotseat%20API&uri=https%3A%2F%2Fgithub.com%2FLauraBeatris%2Fhotseat-api%2Fblob%2Fmaster%2F.github%2Finsomnia-workspace.json)
 
 [![Author](https://img.shields.io/badge/author-LauraBeatris-1D71AB?style=flat-square)](https://github.com/LauraBeatris)
 [![Languages](https://img.shields.io/github/languages/count/LauraBeatris/hotseat-api?color=%231D71AB&style=flat-square)](#)
