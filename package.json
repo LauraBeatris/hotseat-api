@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "npm-run-all -p dev:*",
+    "dev": "NODE_ENV=development npm-run-all -p dev:*",
     "dev:queue": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore node_modules src/shared/infra/queue.ts --port 8000",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore node_modules src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
