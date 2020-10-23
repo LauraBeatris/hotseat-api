@@ -22,10 +22,12 @@
     "type": "mongodb",
     "host": "localhost",
     "port": 27017,
+    "database": "example",
     "username": "example",
     "password": "example",
     "entities": [
       "./src/domains/**/infra/database/schemas/*.ts"
-    ]
+    ],
+    "useUnifiedTopology": true
   }
 ]
