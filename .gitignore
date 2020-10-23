@@ -103,8 +103,12 @@ dist
 # TernJS port file
 .tern-port
 
+# Temporary Disk Files
 tmp/*
 !tmp/.gitkeep
+!tmp/uploads
+
+tmp/uploads/**
 !tmp/uploads/.gitkeep
 
 # Debug / Management
