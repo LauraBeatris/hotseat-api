@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity('notifications')
-class Notification {
+class Notifications {
   @ObjectIdColumn()
   id: ObjectID;
 
@@ -18,8 +18,8 @@ class Notification {
   @Column({ type: 'uuid' })
   recipient_id: string;
 
-  @Column({ default: false })
-  read: boolean;
+  @Column({ type: 'boolean', default: false })
+  read = false;
 
   @CreateDateColumn()
   created_at: Date;
@@ -28,4 +28,4 @@ class Notification {
   updated_at: Date;
 }
 
-export default Notification;
+export default Notifications;
