@@ -16,11 +16,14 @@ class DiskStorageProvider implements IStorageProvider {
   public async deleteFile(filename: string): Promise<void> {
     const fileUploadPath = getFileUploadPath(filename);
 
-    const verifyIfFileExists = fs.promises.stat(fileUploadPath);
+    try {
+      await fs.promises.stat(fileUploadPath);
 
-    verifyIfFileExists.then(async () => {
       await fs.promises.unlink(fileUploadPath);
-    });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
   }
 }
 
