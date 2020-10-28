@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import ResetPasswordService from '@domains/users/services/ResetPasswordService';
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import container from '@shared/container';
 
 export default class ResetPasswordController {

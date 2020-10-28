@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
 import IHashProvider from '@domains/users/providers/HashProvider/interfaces/IHashProvider';

@@ -5,7 +5,7 @@ import { isAfter } from 'date-fns';
 import IRecoverPasswordRequestsRepository from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import IHashProvider from '@domains/users/providers/HashProvider/interfaces/IHashProvider';
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 
 interface IRequest {
   token: string;

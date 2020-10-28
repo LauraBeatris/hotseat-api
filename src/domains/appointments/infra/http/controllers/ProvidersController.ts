@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import ListProvidersService from '@domains/appointments/services/ListProvidersService';
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import container from '@shared/container';
 
 class ProvidersController {

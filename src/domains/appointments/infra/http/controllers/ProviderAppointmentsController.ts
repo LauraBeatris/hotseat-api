@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { classToClass } from 'class-transformer';
 import container from '@shared/container';
 
-import Appointments from '@domains/appointments/infra/database/entities/Appointment';
+import Appointments from '@domains/appointments/infra/typeorm/entities/Appointment';
 import ListProviderAppointmentsService from '@domains/appointments/services/ListProviderAppointmentsService';
 
 class ProviderAppointmentsController {

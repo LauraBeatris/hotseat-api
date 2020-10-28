@@ -2,7 +2,7 @@ import { getDate, getYear, isEqual } from 'date-fns';
 import { uuid } from 'uuidv4';
 
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
-import Appointment from '@domains/appointments/infra/database/entities/Appointment';
+import Appointment from '@domains/appointments/infra/typeorm/entities/Appointment';
 import ICreateAppointmentDTO from '@domains/appointments/dtos/ICreateAppointmentDTO';
 import IFindByMonthFromProviderDTO from '@domains/appointments/dtos/IFindByMonthFromProviderDTO';
 import IFindByDayFromProviderDTO from '@domains/appointments/dtos/IFindByDayFromProviderDTO';

@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import { startOfHour, isAfter, getHours, format } from 'date-fns';
 
-import Appointment from '@domains/appointments/infra/database/entities/Appointment';
+import Appointment from '@domains/appointments/infra/typeorm/entities/Appointment';
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';

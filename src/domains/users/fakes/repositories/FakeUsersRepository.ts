@@ -2,7 +2,7 @@ import { uuid } from 'uuidv4';
 
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import ICreateUserDTO from '@domains/users/dtos/ICreateUserDTO';
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import IFindProvidersDTO from '@domains/users/dtos/IFindProvidersDTO';
 
 export default class FakeUsersRepository implements IUsersRepository {

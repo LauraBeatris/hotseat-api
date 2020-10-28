@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { ObjectID } from 'mongodb';
 
 import container from '@shared/container';
-import NotificationsRepository from '@domains/notifications/infra/database/repositories/NotificationsRepository';
-import Notification from '@domains/notifications/infra/database/schemas/Notification';
+import NotificationsRepository from '@domains/notifications/infra/typeorm/repositories/NotificationsRepository';
+import Notification from '@domains/notifications/infra/typeorm/schemas/Notification';
 import UpdateNotificationReadStatusService from '@domains/notifications/services/UpdateNotificationReadStatusService';
 
 export default class NotificationsController {

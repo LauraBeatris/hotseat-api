@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import UpdateUserService from '@domains/users/services/UpdateUserService';
 import ShowProfileService from '@domains/users/services/ShowProfileService';
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import container from '@shared/container';
 
 export default class ProfileController {

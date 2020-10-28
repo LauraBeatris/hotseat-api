@@ -3,17 +3,17 @@ import { container } from 'tsyringe';
 import './providers';
 import './jobs';
 
-import AppointmentsRepository from '@domains/appointments/infra/database/repositories/AppointmentsRepository';
+import AppointmentsRepository from '@domains/appointments/infra/typeorm/repositories/AppointmentsRepository';
 import IAppointmentsRepository from '@domains/appointments/interfaces/IAppointmentsRepository';
 
-import UsersRepository from '@domains/users/infra/database/repositories/UsersRepository';
+import UsersRepository from '@domains/users/infra/typeorm/repositories/UsersRepository';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 
-import RecoverPasswordRequestsRepository from '@domains/users/infra/database/repositories/RecoverPasswordRequestsRepository';
+import RecoverPasswordRequestsRepository from '@domains/users/infra/typeorm/repositories/RecoverPasswordRequestsRepository';
 import IRecoverPasswordRequestsRepository from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
 
 import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';
-import NotificationsRepository from '@domains/notifications/infra/database/repositories/NotificationsRepository';
+import NotificationsRepository from '@domains/notifications/infra/typeorm/repositories/NotificationsRepository';
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',

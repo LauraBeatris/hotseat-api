@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
-import Notification from '@domains/notifications/infra/database/schemas/Notification';
+import Notification from '@domains/notifications/infra/typeorm/schemas/Notification';
 import INotificationsRepository from '@domains/notifications/interfaces/INotificationsRepository';
 import { ObjectID } from 'mongodb';
 

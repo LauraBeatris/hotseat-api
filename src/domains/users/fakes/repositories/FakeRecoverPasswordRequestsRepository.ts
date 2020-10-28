@@ -1,6 +1,6 @@
 import { addHours } from 'date-fns';
 import { uuid } from 'uuidv4';
-import RecoverPasswordRequest from '@domains/users/infra/database/entities/RecoverPasswordRequest';
+import RecoverPasswordRequest from '@domains/users/infra/typeorm/entities/RecoverPasswordRequest';
 import IRecoverPasswordRequestsRepository from '@domains/users/interfaces/IRecoverPasswordRequestsRepository';
 import { RESET_PASSWORD_REQUEST_EXPIRES_IN_HOURS } from '@domains/users/constants/resetPassword';
 

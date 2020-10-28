@@ -3,7 +3,7 @@ import { classToClass } from 'class-transformer';
 
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import AppError from '@shared/errors/AppError';
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;

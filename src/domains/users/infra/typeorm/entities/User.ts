@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
 
-import Appointment from '@domains/appointments/infra/database/entities/Appointment';
+import Appointment from '@domains/appointments/infra/typeorm/entities/Appointment';
 import { STATIC_FILES_ROUTE } from '@shared/constants/upload';
 
 @Entity('users')

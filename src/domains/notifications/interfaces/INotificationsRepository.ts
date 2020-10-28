@@ -1,5 +1,5 @@
 import ICreateNotificationDTO from '@domains/notifications/dtos/ICreateNotificationDTO';
-import Notification from '@domains/notifications/infra/database/schemas/Notification';
+import Notification from '@domains/notifications/infra/typeorm/schemas/Notification';
 import { ObjectID } from 'mongodb';
 
 export default interface INotificationsRepository {

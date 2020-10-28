@@ -8,7 +8,7 @@ import { errors as validationErrorsHandler } from 'celebrate';
 import * as Sentry from '@sentry/node';
 
 import errorsHandler from '@shared/infra/http/handlers/errors';
-import '@shared/infra/database';
+import '@shared/infra/typeorm';
 import uploadConfig from '@config/upload';
 import { STATIC_FILES_ROUTE } from '@shared/constants/upload';
 

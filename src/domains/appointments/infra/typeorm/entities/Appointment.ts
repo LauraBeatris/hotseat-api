@@ -8,7 +8,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import APPOINTMENT_TYPES, {
   AppointmentType,
 } from '@domains/appointments/enums/appointmentTypes';

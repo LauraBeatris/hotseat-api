@@ -1,6 +1,6 @@
 import { injectable, inject } from 'tsyringe';
 
-import User from '@domains/users/infra/database/entities/User';
+import User from '@domains/users/infra/typeorm/entities/User';
 import IUsersRepository from '@domains/users/interfaces/IUsersRepository';
 import ICacheProvider from '@shared/container/providers/CacheProvider/interfaces/ICacheProvider';
 import { getProvidersListCacheKey } from '@shared/constants/cacheKeys';
