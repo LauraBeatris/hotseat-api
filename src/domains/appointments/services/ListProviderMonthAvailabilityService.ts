@@ -63,12 +63,13 @@ class ListProviderMonthAvailabilityService {
         59,
       );
 
-      const isOnThePast = isAfter(new Date(Date.now()), availabilityDate);
+      const isPast = isAfter(new Date(Date.now()), availabilityDate);
 
       return {
         day,
+        isPast,
         available:
-          !isOnThePast && numberOfAppointmentsInDay < MAX_APPOINTMENTS_PER_DAY,
+          !isPast && numberOfAppointmentsInDay < MAX_APPOINTMENTS_PER_DAY,
       };
     });
 
