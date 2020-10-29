@@ -15,6 +15,9 @@ class NotificationsRepository implements INotificationsRepository {
       order: {
         created_at: 'DESC',
       },
+      where: {
+        read: false,
+      },
       skip: (page - 1) * 6,
       take: 6,
     });
