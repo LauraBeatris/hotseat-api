@@ -8,12 +8,16 @@ import UpdateNotificationReadStatusService from '@domains/notifications/services
 
 export default class NotificationsController {
   public async index(
-    _request: Request,
+    request: Request,
     response: Response,
   ): Promise<Response<Notification[]>> {
+    const { page = 1 } = request.query;
+
     const notificationsRepository = new NotificationsRepository();
 
-    const notifications = await notificationsRepository.find();
+    const notifications = await notificationsRepository.find(
+      parseInt(page as string, 10),
+    );
 
     return response.json(notifications);
   }

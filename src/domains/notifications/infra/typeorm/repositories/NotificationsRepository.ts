@@ -10,11 +10,13 @@ class NotificationsRepository implements INotificationsRepository {
     this.ormRepository = getMongoRepository(Notification, 'mongo');
   }
 
-  public async find(): Promise<Notification[]> {
+  public async find(page: number): Promise<Notification[]> {
     const notifications = await this.ormRepository.find({
       order: {
         created_at: 'DESC',
       },
+      skip: (page - 1) * 6,
+      take: 6,
     });
 
     return notifications;
