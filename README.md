@@ -1,5 +1,5 @@
 <p align="left">
-   <img src=".github/docs/logo.png" width="200"/>
+  <img src=".github/docs/logo.png" width="200"/>
 </p>
 
 # Hotseat
@@ -82,13 +82,13 @@ Run the transactions in order to configure the database schema
 
 Run the following command in order to start the application in a development environment:
 
-```yarn dev:server```
+```yarn dev```
 
 # :postbox: Faq
 
 **Question:** What are the technologies used in this project?
 
-**Answer:** The technologies used in this project are [NodeJS](https://nodejs.org/en/) + [Express Framework](http://expressjs.com/en/) to handle the server and [TypeORM](https://typeorm.io/#/)
+**Answer:** The technologies used in this project are [NodeJS](https://nodejs.org/en/) + [Express Framework](http://expressjs.com/en/) to handle the server and [TypeORM](https://typeorm.io/#/) as the Object Relational Mapper
 
 # :bug: Issues
 
