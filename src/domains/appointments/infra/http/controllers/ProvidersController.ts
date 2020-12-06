@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import ListProvidersService from '@domains/appointments/services/ListProvidersService';
 import User from '@domains/users/infra/typeorm/entities/User';
@@ -14,7 +15,7 @@ class ProvidersController {
       exceptUserId: user_id,
     });
 
-    return response.json(providers);
+    return response.json(classToClass(providers));
   }
 }
 
