@@ -16,7 +16,6 @@ services:
     image: mongo
     ports:
       - "27017:27017"
-    command: [--auth]
   redis:
     image: redis:4.0.5-alpine
     command: ["redis-server", "--appendonly", "yes"]
