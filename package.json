@@ -68,7 +68,7 @@
     "nodemailer": "^6.4.10",
     "pg": "^8.2.0",
     "rate-limiter-flexible": "^2.1.10",
-    "redis": "^3.0.2",
+    "redis": "^3.1.1",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.3.0",
     "typeorm": "^0.2.28",
